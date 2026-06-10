@@ -1,0 +1,26 @@
+src/domain/valueObjects/ReservationPeriod.ts
+  s_0ffc8f6ff54621::t_e983e465848d37 1-8,11-30,34-40,42-45,47-51,53-76
+  s_0ffc8f6ff54621::t_196632e1d2f5bd 9,41,46,52
+src/domain/valueObjects/ReservationStatus.ts
+  s_0ffc8f6ff54621::t_5bd963bbfd78f6 1-30
+src/domain/valueObjects/ResourceType.ts
+  s_0ffc8f6ff54621::t_5bd963bbfd78f6 1,4-27
+src/domain/valueObjects/EquipmentCategory.ts
+  s_0ffc8f6ff54621::t_5bd963bbfd78f6 1-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "7d1870ae01e52bb85bffcd22358b47aff8498946",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
