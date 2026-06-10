@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+.env.local
+coverage
+*.log
+
+# SQLite
+*.db
+*.db-journal
+
+# Prisma
+prisma/dev.db
+/src/generated/prisma
