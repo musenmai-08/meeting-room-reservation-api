@@ -1,0 +1,31 @@
+docs/testing/README.md
+  s_0ffc8f6ff54621::t_68331bc90521da 15-16,35-40,42-58
+  s_0ffc8f6ff54621::t_db1dc7553fee61 25,27,29-32,34
+  s_0ffc8f6ff54621::t_1e07c8a71ac1d8 13-14
+  s_0ffc8f6ff54621::t_aa726e2498407e 72-77
+  s_0ffc8f6ff54621::t_90694c03172f6d 1-12,17-24,26,28,33,41,59-71,78-82
+docs/testing/domain.md
+  s_0ffc8f6ff54621::t_db1dc7553fee61 1-106
+docs/testing/api.md
+  s_0ffc8f6ff54621::t_db1dc7553fee61 1-26
+docs/testing/repository.md
+  s_0ffc8f6ff54621::t_db1dc7553fee61 1-28
+docs/testing/usecase.md
+  s_0ffc8f6ff54621::t_db1dc7553fee61 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "8149fa60a648906ff7f072fa902b45304a90e3ce",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
