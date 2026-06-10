@@ -1,0 +1,41 @@
+src/domain/errors/ResourceErrors.ts
+  s_0ffc8f6ff54621::t_621a812303871a 1-8
+src/domain/entities/MeetingRoom.ts
+  s_0ffc8f6ff54621::t_f5b08e136d63d7 1
+src/domain/valueObjects/ReservationStatus.ts
+  s_0ffc8f6ff54621::t_621a812303871a 1
+src/domain/errors/EquipmentErrors.ts
+  s_0ffc8f6ff54621::t_f5b08e136d63d7 1-8
+  s_0ffc8f6ff54621::t_621a812303871a 9-14
+src/domain/errors/ReservationErrors.ts
+  s_0ffc8f6ff54621::t_621a812303871a 9-20
+  s_0ffc8f6ff54621::t_f5b08e136d63d7 1-8,21-43
+src/domain/valueObjects/EquipmentCategory.ts
+  s_0ffc8f6ff54621::t_621a812303871a 1
+src/domain/errors/MeetingRoomErrors.ts
+  s_0ffc8f6ff54621::t_f5b08e136d63d7 1-8
+src/domain/entities/Equipment.ts
+  s_0ffc8f6ff54621::t_f5b08e136d63d7 1
+src/domain/entities/Reservation.ts
+  s_0ffc8f6ff54621::t_f5b08e136d63d7 1-6
+src/domain/valueObjects/ResourceType.ts
+  s_0ffc8f6ff54621::t_621a812303871a 1
+src/domain/valueObjects/ReservationPeriod.ts
+  s_0ffc8f6ff54621::t_621a812303871a 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "0e5bf285291c6585084277a75c3f9c3272265ae5",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
