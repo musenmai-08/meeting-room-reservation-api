@@ -1,0 +1,19 @@
+src/domain/services/ReservationConflictService.ts
+  s_0ffc8f6ff54621::t_68d6bb437da669 1-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "589059c8b1c9cbbfe35b89d4209e5266dd5445b4",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
