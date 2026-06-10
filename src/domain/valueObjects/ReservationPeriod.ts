@@ -1,6 +1,8 @@
-export class InvalidReservationPeriodError extends Error {
+import { DomainError } from "../errors/DomainError";
+
+export class InvalidReservationPeriodError extends DomainError {
   public constructor(message: string) {
-    super(message);
+    super(message, "INVALID_RESERVATION_PERIOD");
     this.name = "InvalidReservationPeriodError";
   }
 }

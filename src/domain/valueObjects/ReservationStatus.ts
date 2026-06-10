@@ -1,3 +1,5 @@
+import { DomainError } from "../errors/DomainError";
+
 export const ReservationStatus = {
   Reserved: "RESERVED",
   Cancelled: "CANCELLED",
@@ -6,10 +8,9 @@ export const ReservationStatus = {
 export type ReservationStatus =
   (typeof ReservationStatus)[keyof typeof ReservationStatus];
 
-export class InvalidReservationStatusError extends Error {
+export class InvalidReservationStatusError extends DomainError {
   public constructor(value: string) {
-    super(`Invalid reservation status: ${value}`);
-    this.name = "InvalidReservationStatusError";
+    super(`Invalid reservation status: ${value}`, "INVALID_RESERVATION_STATUS");
   }
 }
 
@@ -27,4 +28,3 @@ export function parseReservationStatus(value: string): ReservationStatus {
 
   return value;
 }
-

@@ -1,3 +1,5 @@
+import { DomainError } from "../errors/DomainError";
+
 export const ResourceType = {
   MeetingRoom: "MEETING_ROOM", // 会議予約
   Equipment: "EQUIPMENT", // 備品予約
@@ -5,10 +7,9 @@ export const ResourceType = {
 
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];
 
-export class InvalidResourceTypeError extends Error {
+export class InvalidResourceTypeError extends DomainError {
   public constructor(value: string) {
-    super(`Invalid resource type: ${value}`);
-    this.name = "InvalidResourceTypeError";
+    super(`Invalid resource type: ${value}`, "INVALID_RESOURCE_TYPE");
   }
 }
 
