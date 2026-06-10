@@ -1,4 +1,4 @@
-import { DomainError } from "../errors/DomainError";
+import { InvalidEquipmentError } from "../errors/EquipmentErrors";
 import {
   type EquipmentCategory,
   isEquipmentCategory,
@@ -13,12 +13,6 @@ type EquipmentProps = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export class InvalidEquipmentError extends DomainError {
-  public constructor(message: string) {
-    super(message, "INVALID_EQUIPMENT");
-  }
-}
 
 export class Equipment {
   // Entity は ID で同一性を判断するため、値は private に閉じ込めます。
@@ -98,4 +92,3 @@ export class Equipment {
     return new Date(date.getTime());
   }
 }
-

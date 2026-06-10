@@ -1,4 +1,4 @@
-import { DomainError } from "../errors/DomainError";
+import { InvalidEquipmentCategoryError } from "../errors/EquipmentErrors";
 
 export const EquipmentCategory = {
   Projector: "PROJECTOR",
@@ -11,12 +11,6 @@ export const EquipmentCategory = {
 
 export type EquipmentCategory =
   (typeof EquipmentCategory)[keyof typeof EquipmentCategory];
-
-export class InvalidEquipmentCategoryError extends DomainError {
-  public constructor(value: string) {
-    super(`Invalid equipment category: ${value}`, "INVALID_EQUIPMENT_CATEGORY");
-  }
-}
 
 const equipmentCategoryValues: readonly string[] =
   Object.values(EquipmentCategory);

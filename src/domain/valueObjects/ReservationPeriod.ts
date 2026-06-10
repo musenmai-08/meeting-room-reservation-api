@@ -1,11 +1,4 @@
-import { DomainError } from "../errors/DomainError";
-
-export class InvalidReservationPeriodError extends DomainError {
-  public constructor(message: string) {
-    super(message, "INVALID_RESERVATION_PERIOD");
-    this.name = "InvalidReservationPeriodError";
-  }
-}
+import { InvalidReservationPeriodError } from "../errors/ReservationErrors";
 
 export class ReservationPeriod {
   // constructor を private にして、必ず create の検証を通して生成します。

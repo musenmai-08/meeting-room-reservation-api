@@ -1,4 +1,4 @@
-import { DomainError } from "../errors/DomainError";
+import { InvalidMeetingRoomError } from "../errors/MeetingRoomErrors";
 
 type MeetingRoomProps = {
   id: string;
@@ -9,12 +9,6 @@ type MeetingRoomProps = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export class InvalidMeetingRoomError extends DomainError {
-  public constructor(message: string) {
-    super(message, "INVALID_MEETING_ROOM");
-  }
-}
 
 export class MeetingRoom {
   // Entity は ID で同一性を判断するため、値は private に閉じ込めます。
@@ -96,4 +90,3 @@ export class MeetingRoom {
     return new Date(date.getTime());
   }
 }
-

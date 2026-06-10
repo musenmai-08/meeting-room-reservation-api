@@ -1,4 +1,9 @@
-import { DomainError } from "../errors/DomainError";
+import {
+  AlreadyCancelledError,
+  CannotCancelPastReservationError,
+  InvalidReservationError,
+  ReservationCancellationForbiddenError,
+} from "../errors/ReservationErrors";
 import { ReservationPeriod } from "../valueObjects/ReservationPeriod";
 import { ReservationStatus } from "../valueObjects/ReservationStatus";
 import { type ResourceType, isResourceType } from "../valueObjects/ResourceType";
@@ -15,36 +20,6 @@ type ReservationProps = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export class InvalidReservationError extends DomainError {
-  public constructor(message: string) {
-    super(message, "INVALID_RESERVATION");
-  }
-}
-
-export class AlreadyCancelledError extends DomainError {
-  public constructor() {
-    super("reservation is already cancelled.", "ALREADY_CANCELLED");
-  }
-}
-
-export class CannotCancelPastReservationError extends DomainError {
-  public constructor() {
-    super(
-      "reservation cannot be cancelled after it has started.",
-      "CANNOT_CANCEL_PAST_RESERVATION",
-    );
-  }
-}
-
-export class ReservationCancellationForbiddenError extends DomainError {
-  public constructor() {
-    super(
-      "only the reservation owner can cancel this reservation.",
-      "RESERVATION_CANCELLATION_FORBIDDEN",
-    );
-  }
-}
 
 export class Reservation {
   // Entity は予約 ID で同一性を判断します。
@@ -203,4 +178,3 @@ export class Reservation {
     return new Date(date.getTime());
   }
 }
-

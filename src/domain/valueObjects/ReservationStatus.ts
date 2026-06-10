@@ -1,4 +1,4 @@
-import { DomainError } from "../errors/DomainError";
+import { InvalidReservationStatusError } from "../errors/ReservationErrors";
 
 export const ReservationStatus = {
   Reserved: "RESERVED",
@@ -7,12 +7,6 @@ export const ReservationStatus = {
 
 export type ReservationStatus =
   (typeof ReservationStatus)[keyof typeof ReservationStatus];
-
-export class InvalidReservationStatusError extends DomainError {
-  public constructor(value: string) {
-    super(`Invalid reservation status: ${value}`, "INVALID_RESERVATION_STATUS");
-  }
-}
 
 const reservationStatusValues: readonly string[] =
   Object.values(ReservationStatus);
