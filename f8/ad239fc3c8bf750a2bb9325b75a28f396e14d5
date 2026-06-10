@@ -1,0 +1,23 @@
+src/domain/entities/Reservation.ts
+  s_0ffc8f6ff54621::t_79aaf7afe2d1e2 1-206
+src/domain/entities/Equipment.ts
+  s_0ffc8f6ff54621::t_79aaf7afe2d1e2 1-101
+src/domain/entities/MeetingRoom.ts
+  s_0ffc8f6ff54621::t_10ad45116181e5 1-99
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "f8ad239fc3c8bf750a2bb9325b75a28f396e14d5",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
