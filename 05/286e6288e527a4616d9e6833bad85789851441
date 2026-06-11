@@ -1,0 +1,47 @@
+tests/domain/entities/Reservation.test.ts
+  h_ae5b095b1dd8a4 14-15,146-147,152-153,170
+  s_0ffc8f6ff54621::t_04676070f3f418 45,59,65,73,79,85,93,99,105,111,117,126,135,144,150,156,178,190,198,209,217,225,235,245
+  s_0ffc8f6ff54621::t_983fe9043d8aa4 1-13,16-44,46-58,60-64,66-72,74-78,80-84,86-92,94-98,100-104,106-110,112-116,118-125,127-134,136-143,145,148-149,151,154-155,157-169,171-177,179-189,191-197,199-208,210-216,218-224,226-234,236-244,246-252
+tsconfig.json
+  s_0ffc8f6ff54621::t_539da980cbf3d0 10
+tests/domain/entities/MeetingRoom.test.ts
+  s_0ffc8f6ff54621::t_a63c3d0f8a8b06 1-136
+tests/domain/valueObjects/ReservationPeriod.test.ts
+  s_0ffc8f6ff54621::t_04676070f3f418 10,20,29,38,47,56,68,85,98,111,124,139,150,161,172
+  s_0ffc8f6ff54621::t_92a2ca18e25c96 1-9,11-19,21-28,30-37,39-46,48-55,57-67,69-84,86-97,99-110,112-123,125-138,140-149,151-160,162-171,173-183
+tests/domain/valueObjects/ResourceType.test.ts
+  s_0ffc8f6ff54621::t_a63c3d0f8a8b06 1-38
+tests/domain/valueObjects/ReservationStatus.test.ts
+  s_0ffc8f6ff54621::t_a63c3d0f8a8b06 1-42
+tests/domain/valueObjects/EquipmentCategory.test.ts
+  s_0ffc8f6ff54621::t_a63c3d0f8a8b06 1-64
+docs/testing/README.md
+  s_0ffc8f6ff54621::t_2b760cc0f577ba 75
+tests/domain/services/ReservationConflictService.test.ts
+  s_0ffc8f6ff54621::t_983fe9043d8aa4 1-8,11-38,40-53,55-68,70-83,85-103,105-133
+  s_0ffc8f6ff54621::t_04676070f3f418 39,54,69,84,104
+  h_ae5b095b1dd8a4 9-10
+tests/domain/entities/Equipment.test.ts
+  s_0ffc8f6ff54621::t_a63c3d0f8a8b06 1-138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "05286e6288e527a4616d9e6833bad85789851441",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
