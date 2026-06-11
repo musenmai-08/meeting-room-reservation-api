@@ -1,0 +1,38 @@
+src/application/errors/ResourceApplicationErrors.ts
+  s_0ffc8f6ff54621::t_a4ae5afb39223e 1-8
+src/application/usecases/reservations/ListReservationsUseCase.ts
+  s_0ffc8f6ff54621::t_b71b00deabae8c 1-64
+src/application/errors/ReservationApplicationErrors.ts
+  s_0ffc8f6ff54621::t_a4ae5afb39223e 1-4,9-13,18-20
+  s_0ffc8f6ff54621::t_b71b00deabae8c 5-8,14-17,21-25
+src/application/usecases/reservations/CancelReservationUseCase.ts
+  s_0ffc8f6ff54621::t_b71b00deabae8c 1-65
+src/application/usecases/reservations/CreateReservationUseCase.ts
+  s_0ffc8f6ff54621::t_a4ae5afb39223e 1-2,4-60,62-101,103-116
+  h_ae5b095b1dd8a4 3,61,102
+src/application/usecases/reservations/GetReservationUseCase.ts
+  s_0ffc8f6ff54621::t_b71b00deabae8c 1-55
+docs/testing/usecase.md
+  s_0ffc8f6ff54621::t_b71b00deabae8c 49,60,66-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "6f8a7b2f6e75f616d70780281ae3fc692791745f",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
