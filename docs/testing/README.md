@@ -72,7 +72,7 @@ npm run test:run
 カバレッジを確認したい場合:
 
 ```txt
-npm run test:run -- --coverage
+npm run test:coverage
 ```
 
 開発中に watch したい場合:
