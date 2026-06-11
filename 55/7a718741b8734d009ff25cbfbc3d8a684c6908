@@ -1,0 +1,25 @@
+src/application/errors/EquipmentApplicationErrors.ts
+  s_0ffc8f6ff54621::t_36575ade3a04c5 1-8
+src/application/usecases/equipments/CreateEquipmentUseCase.ts
+  s_0ffc8f6ff54621::t_36575ade3a04c5 1-66
+docs/testing/usecase.md
+  s_0ffc8f6ff54621::t_36575ade3a04c5 28-44
+src/application/usecases/equipments/ListEquipmentsUseCase.ts
+  s_0ffc8f6ff54621::t_36575ade3a04c5 1-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "557a718741b8734d009ff25cbfbc3d8a684c6908",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
