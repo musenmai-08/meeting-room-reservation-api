@@ -1,4 +1,5 @@
 import {
+  type OverlappingReservationResourceTypeCriteria,
   type ReservationRepository,
   type ReservationResourceCriteria,
   type ReservationSearchCriteria,
@@ -32,6 +33,18 @@ export class InMemoryReservationRepository implements ReservationRepository {
         reservation.resourceType === criteria.resourceType &&
         reservation.resourceId === criteria.resourceId &&
         this.matchesPeriodCriteria(reservation, criteria),
+    );
+  }
+
+  public async findOverlappingByResourceType(
+    criteria: OverlappingReservationResourceTypeCriteria,
+  ): Promise<Reservation[]> {
+    return [...this.reservations.values()].filter(
+      (reservation) =>
+        reservation.resourceType === criteria.resourceType &&
+        reservation.isReserved() &&
+        reservation.period.startAt.getTime() < criteria.endAt.getTime() &&
+        criteria.startAt.getTime() < reservation.period.endAt.getTime(),
     );
   }
 
@@ -85,4 +98,3 @@ export class InMemoryReservationRepository implements ReservationRepository {
     return true;
   }
 }
-

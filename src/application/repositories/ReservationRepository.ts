@@ -18,10 +18,18 @@ export type ReservationResourceCriteria = {
   to?: Date;
 };
 
+export type OverlappingReservationResourceTypeCriteria = {
+  resourceType: ResourceType;
+  startAt: Date;
+  endAt: Date;
+};
+
 export interface ReservationRepository {
   save(reservation: Reservation): Promise<void>;
   findById(id: string): Promise<Reservation | null>;
   findAll(criteria?: ReservationSearchCriteria): Promise<Reservation[]>;
   findByResource(criteria: ReservationResourceCriteria): Promise<Reservation[]>;
+  findOverlappingByResourceType(
+    criteria: OverlappingReservationResourceTypeCriteria,
+  ): Promise<Reservation[]>;
 }
-
