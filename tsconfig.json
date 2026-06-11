@@ -10,7 +10,8 @@
 		"rootDir": ".",
 		"paths": {
 			"@application/*": ["./src/application/*"],
-			"@domain/*": ["./src/domain/*"]
+			"@domain/*": ["./src/domain/*"],
+			"@infrastructure/*": ["./src/infrastructure/*"]
 		},
 		"types": ["node"]
 	},
