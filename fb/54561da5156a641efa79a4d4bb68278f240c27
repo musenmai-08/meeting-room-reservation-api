@@ -1,0 +1,38 @@
+tests/domain/entities/MeetingRoom.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3-4
+tests/domain/valueObjects/ReservationStatus.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3,8
+vitest.config.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 1-11
+tests/domain/valueObjects/ReservationPeriod.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3-4
+tests/domain/services/ReservationConflictService.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3-7
+tests/domain/entities/Reservation.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3,9-12
+tests/domain/valueObjects/EquipmentCategory.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3,8
+tests/domain/valueObjects/ResourceType.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3,8
+tsconfig.json
+  s_0ffc8f6ff54621::t_ff7143b8162758 11,13
+  s_0ffc8f6ff54621::t_3b34bd38ac6fc4 12
+tests/domain/entities/Equipment.test.ts
+  s_0ffc8f6ff54621::t_ff7143b8162758 3-4,8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "fb54561da5156a641efa79a4d4bb68278f240c27",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
