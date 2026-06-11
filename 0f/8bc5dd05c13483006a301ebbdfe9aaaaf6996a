@@ -1,0 +1,27 @@
+vitest.config.ts
+  s_0ffc8f6ff54621::t_bc5ea4610ef090 7
+src/application/repositories/EquipmentRepository.ts
+  s_0ffc8f6ff54621::t_e7cb527dc8faf4 1-15
+src/application/repositories/MeetingRoomRepository.ts
+  s_0ffc8f6ff54621::t_bc5ea4610ef090 1-14
+tsconfig.json
+  s_0ffc8f6ff54621::t_bc5ea4610ef090 12
+src/application/repositories/ReservationRepository.ts
+  s_0ffc8f6ff54621::t_e7cb527dc8faf4 1-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "0f8bc5dd05c13483006a301ebbdfe9aaaaf6996a",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
