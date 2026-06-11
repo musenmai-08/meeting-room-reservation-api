@@ -1,0 +1,27 @@
+tsconfig.json
+  s_0ffc8f6ff54621::t_ceed72353d32a3 13-14
+vitest.config.ts
+  s_0ffc8f6ff54621::t_ceed72353d32a3 9
+src/infrastructure/repositories/InMemoryEquipmentRepository.ts
+  s_0ffc8f6ff54621::t_141088aecf6300 1-48
+src/infrastructure/repositories/InMemoryReservationRepository.ts
+  s_0ffc8f6ff54621::t_141088aecf6300 1-88
+src/infrastructure/repositories/InMemoryMeetingRoomRepository.ts
+  s_0ffc8f6ff54621::t_ceed72353d32a3 1-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "52117f9af661524067e170651b915bc64ac53b88",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
