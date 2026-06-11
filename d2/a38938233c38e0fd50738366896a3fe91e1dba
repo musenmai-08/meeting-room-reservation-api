@@ -1,0 +1,33 @@
+src/application/repositories/ReservationRepository.ts
+  s_0ffc8f6ff54621::t_cdf8641be84f73 21-26,32-34
+docs/testing/usecase.md
+  s_0ffc8f6ff54621::t_fb6644b3559550 90,96-97
+src/application/usecases/resources/SearchAvailableResourcesUseCase.ts
+  h_ae5b095b1dd8a4 35,48,53
+  s_0ffc8f6ff54621::t_fb6644b3559550 1-34,36-47,49-52,56,59,68-72,75-79,82,85,94-98,101-102
+  s_0ffc8f6ff54621::t_e595ce8ad0e62d 63
+  s_0ffc8f6ff54621::t_cdf8641be84f73 54-55,57-58,60-62,64-67,73-74,80-81,83-84,86-93,99-100
+src/infrastructure/repositories/InMemoryReservationRepository.ts
+  s_0ffc8f6ff54621::t_cdf8641be84f73 2,39-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "d2a38938233c38e0fd50738366896a3fe91e1dba",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
