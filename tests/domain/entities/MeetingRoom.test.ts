@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { MeetingRoom } from "../../../src/domain/entities/MeetingRoom";
-import { InvalidMeetingRoomError } from "../../../src/domain/errors/MeetingRoomErrors";
+import { MeetingRoom } from "@domain/entities/MeetingRoom";
+import { InvalidMeetingRoomError } from "@domain/errors/MeetingRoomErrors";
 
 type MeetingRoomFactoryProps = Parameters<typeof MeetingRoom.create>[0];
 
@@ -133,4 +133,3 @@ describe("MeetingRoom", () => {
     });
   });
 });
-

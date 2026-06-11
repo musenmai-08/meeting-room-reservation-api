@@ -8,6 +8,9 @@
 		"skipLibCheck": true,
 		"outDir": "./dist",
 		"rootDir": ".",
+		"paths": {
+			"@domain/*": ["./src/domain/*"]
+		},
 		"types": ["node"]
 	},
 	"include": ["src", "tests"],

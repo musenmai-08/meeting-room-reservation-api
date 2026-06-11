@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { Equipment } from "../../../src/domain/entities/Equipment";
-import { InvalidEquipmentError } from "../../../src/domain/errors/EquipmentErrors";
+import { Equipment } from "@domain/entities/Equipment";
+import { InvalidEquipmentError } from "@domain/errors/EquipmentErrors";
 import {
   EquipmentCategory,
   type EquipmentCategory as EquipmentCategoryType,
-} from "../../../src/domain/valueObjects/EquipmentCategory";
+} from "@domain/valueObjects/EquipmentCategory";
 
 type EquipmentFactoryProps = Parameters<typeof Equipment.create>[0];
 
@@ -135,4 +135,3 @@ describe("Equipment", () => {
     });
   });
 });
-

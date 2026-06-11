@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { InvalidReservationPeriodError } from "../../../src/domain/errors/ReservationErrors";
-import { ReservationPeriod } from "../../../src/domain/valueObjects/ReservationPeriod";
+import { InvalidReservationPeriodError } from "@domain/errors/ReservationErrors";
+import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
 
 const date = (isoString: string): Date => new Date(isoString);
 

@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { InvalidReservationStatusError } from "../../../src/domain/errors/ReservationErrors";
+import { InvalidReservationStatusError } from "@domain/errors/ReservationErrors";
 import {
   isReservationStatus,
   parseReservationStatus,
   ReservationStatus,
-} from "../../../src/domain/valueObjects/ReservationStatus";
+} from "@domain/valueObjects/ReservationStatus";
 
 describe("ReservationStatus", () => {
   describe("parseReservationStatus", () => {
@@ -39,4 +39,3 @@ describe("ReservationStatus", () => {
     });
   });
 });
-

@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { InvalidEquipmentCategoryError } from "../../../src/domain/errors/EquipmentErrors";
+import { InvalidEquipmentCategoryError } from "@domain/errors/EquipmentErrors";
 import {
   EquipmentCategory,
   isEquipmentCategory,
   parseEquipmentCategory,
-} from "../../../src/domain/valueObjects/EquipmentCategory";
+} from "@domain/valueObjects/EquipmentCategory";
 
 describe("EquipmentCategory", () => {
   describe("parseEquipmentCategory", () => {
@@ -61,4 +61,3 @@ describe("EquipmentCategory", () => {
     });
   });
 });
-

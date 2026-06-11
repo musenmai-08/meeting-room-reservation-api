@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { InvalidResourceTypeError } from "../../../src/domain/errors/ResourceErrors";
+import { InvalidResourceTypeError } from "@domain/errors/ResourceErrors";
 import {
   isResourceType,
   parseResourceType,
   ResourceType,
-} from "../../../src/domain/valueObjects/ResourceType";
+} from "@domain/valueObjects/ResourceType";
 
 describe("ResourceType", () => {
   describe("parseResourceType", () => {
@@ -35,4 +35,3 @@ describe("ResourceType", () => {
     });
   });
 });
-

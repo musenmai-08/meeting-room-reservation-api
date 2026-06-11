@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { Reservation } from "../../../src/domain/entities/Reservation";
-import { ReservationConflictService } from "../../../src/domain/services/ReservationConflictService";
-import { ReservationPeriod } from "../../../src/domain/valueObjects/ReservationPeriod";
-import { ReservationStatus } from "../../../src/domain/valueObjects/ReservationStatus";
-import { ResourceType } from "../../../src/domain/valueObjects/ResourceType";
+import { Reservation } from "@domain/entities/Reservation";
+import { ReservationConflictService } from "@domain/services/ReservationConflictService";
+import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
+import { ReservationStatus } from "@domain/valueObjects/ReservationStatus";
+import { ResourceType } from "@domain/valueObjects/ResourceType";
 
 // Reservation.create に渡す入力型 ということを意図した型にしたいので、
 // Reservation.ts の type ReservationProps を export せず、以下のように型を取得している
