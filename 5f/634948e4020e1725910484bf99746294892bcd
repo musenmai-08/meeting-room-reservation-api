@@ -1,0 +1,34 @@
+src/application/usecases/meetingRooms/ListMeetingRoomsUseCase.ts
+  s_0ffc8f6ff54621::t_3cd95d305a97ba 1-46
+docs/testing/usecase.md
+  s_0ffc8f6ff54621::t_f2a291fd440b8c 9-18
+  s_0ffc8f6ff54621::t_3cd95d305a97ba 19-27
+src/application/errors/ApplicationError.ts
+  s_0ffc8f6ff54621::t_f2a291fd440b8c 1-10
+src/application/usecases/meetingRooms/CreateMeetingRoomUseCase.ts
+  h_ae5b095b1dd8a4 26
+  s_0ffc8f6ff54621::t_f2a291fd440b8c 1-25,27-65
+src/application/errors/MeetingRoomApplicationErrors.ts
+  s_0ffc8f6ff54621::t_f2a291fd440b8c 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "5f634948e4020e1725910484bf99746294892bcd",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
