@@ -1,0 +1,44 @@
+tests/application/usecases/reservations/GetReservationUseCase.test.ts
+  s_0ffc8f6ff54621::t_6f19e138006707 1-74
+tests/application/usecases/meetingRooms/ListMeetingRoomsUseCase.test.ts
+  s_0ffc8f6ff54621::t_46db91ed45f61c 1-98
+tests/application/usecases/reservations/ListReservationsUseCase.test.ts
+  s_0ffc8f6ff54621::t_6f19e138006707 1-159
+tests/application/usecases/reservations/CreateReservationUseCase.test.ts
+  s_0ffc8f6ff54621::t_6f19e138006707 1-228
+tests/application/usecases/resources/SearchAvailableResourcesUseCase.test.ts
+  s_0ffc8f6ff54621::t_38baa843634ee5 1-216
+tests/application/usecases/reservations/CancelReservationUseCase.test.ts
+  s_0ffc8f6ff54621::t_6f19e138006707 1-124
+src/application/usecases/reservations/CreateReservationUseCase.ts
+  s_0ffc8f6ff54621::t_e4b815cdc5bb2f 107-108,110-119
+tests/application/usecases/equipments/CreateEquipmentUseCase.test.ts
+  s_0ffc8f6ff54621::t_46db91ed45f61c 1-132
+src/application/usecases/resources/SearchAvailableResourcesUseCase.ts
+  h_ae5b095b1dd8a4 48,50
+tests/application/usecases/equipments/ListEquipmentsUseCase.test.ts
+  s_0ffc8f6ff54621::t_46db91ed45f61c 1-109
+tests/application/usecases/meetingRooms/CreateMeetingRoomUseCase.test.ts
+  s_0ffc8f6ff54621::t_c0ef001182d427 1-131
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "b6d81eb707f7fa90424b7a34dbcdf2e3117a67e9",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
