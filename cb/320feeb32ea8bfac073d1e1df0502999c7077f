@@ -1,0 +1,25 @@
+src/infrastructure/web/routeFactories/meetingRoomRoutes.ts
+  s_149403cdd19328::t_80dd96492bf672 1-33
+src/infrastructure/web/routes.ts
+  s_149403cdd19328::t_6a23822fbaf872 6-8,21-26,28-33,35-36,42
+src/infrastructure/web/routeFactories/equipmentRoutes.ts
+  s_149403cdd19328::t_f413d6e0bdb750 1-33
+src/infrastructure/web/routeFactories/reservationRoutes.ts
+  s_149403cdd19328::t_50d732d688b2ef 1-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "cb320feeb32ea8bfac073d1e1df0502999c7077f",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
