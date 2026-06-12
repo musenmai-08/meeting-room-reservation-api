@@ -45,8 +45,9 @@ export class SearchAvailableResourcesUseCase {
   ): Promise<SearchAvailableResourcesOutput> {
     const period = ReservationPeriod.create(input.startAt, input.endAt);
 
-    // 指定時間帯で空いている会議室だけを返す
+    // 指定時間帯で空いている会議室だけを返す 一連の処理
     if (input.resourceType === ResourceType.MeetingRoom) {
+      // 求めるキャパシティ上の会議室を全て取得
       const meetingRooms = await this.meetingRoomRepository.findAll({
         capacityGte: input.capacityGte,
       });

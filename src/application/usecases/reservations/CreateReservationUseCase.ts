@@ -104,12 +104,19 @@ export class CreateReservationUseCase {
     resourceType: ResourceType,
     resourceId: string,
   ): Promise<void> {
-    const resource =
-      resourceType === ResourceType.MeetingRoom
-        ? await this.meetingRoomRepository.findById(resourceId)
-        : await this.equipmentRepository.findById(resourceId);
+    if (resourceType === ResourceType.MeetingRoom) {
+      const meetingRoom = await this.meetingRoomRepository.findById(resourceId);
 
-    if (resource === null) {
+      if (meetingRoom === null) {
+        throw new ResourceNotFoundError(resourceId);
+      }
+
+      return;
+    }
+
+    const equipment = await this.equipmentRepository.findById(resourceId);
+
+    if (equipment === null) {
       throw new ResourceNotFoundError(resourceId);
     }
   }
