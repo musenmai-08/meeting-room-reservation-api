@@ -1,0 +1,53 @@
+src/infrastructure/web/server.ts
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 1-13
+src/main.ts
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 1-8
+src/interface/presenters/MeetingRoomPresenter.ts
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 1-50
+src/interface/controllers/MeetingRoomController.ts
+  s_0ffc8f6ff54621::t_dee1ad8824f927 2,11-16,43,73-76,78-86
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 1,3-10,17,35-42,50-59,61,64-72,88-124
+  s_149403cdd19328::t_4dfb0aa855205f 44-49
+  s_149403cdd19328::t_9aceb2f5f3f396 18-34,60,62-63,77,87
+package.json
+  s_0ffc8f6ff54621::t_59beb650ce4d44 36-37
+docs/testing/api.md
+  s_0ffc8f6ff54621::t_bd36a42db60ddf 13,19-21
+  s_149403cdd19328::t_a78ca8c80e1176 23-25
+vitest.config.ts
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 9
+src/infrastructure/web/routes.ts
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 1-11,13-15,17-22,24-26
+  h_ae5b095b1dd8a4 12,16,23
+tsconfig.json
+  s_0ffc8f6ff54621::t_7d99dd6a69e151 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "42e7a23eb8e737bcc18f8c8bc06c507480481e9e",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_0ffc8f6ff54621": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eaf68-58d9-70d3-b594-95f2f3a2aee0",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    },
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
