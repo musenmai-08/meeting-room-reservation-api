@@ -1,0 +1,31 @@
+src/interface/presenters/EquipmentPresenter.ts
+  s_149403cdd19328::t_3a17979ee559df 1-46
+src/interface/controllers/EquipmentController.ts
+  s_149403cdd19328::t_252722ae9df5f0 1-121
+docs/testing/api.md
+  s_149403cdd19328::t_5008b2f4eb7d7b 27-30,32-34
+src/infrastructure/web/routes.ts
+  s_149403cdd19328::t_3b268453e48b52 3-4,7,9,18,26-29,34-35
+  h_ae5b095b1dd8a4 32-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "73daf3dc4a70142919dc5f67ce8262f7d93af60d",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
