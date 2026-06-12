@@ -1,19 +1,11 @@
 import { Router } from "express";
 
-import { CreateEquipmentUseCase } from "@application/usecases/equipments/CreateEquipmentUseCase";
-import { ListEquipmentsUseCase } from "@application/usecases/equipments/ListEquipmentsUseCase";
-import { CreateMeetingRoomUseCase } from "@application/usecases/meetingRooms/CreateMeetingRoomUseCase";
-import { ListMeetingRoomsUseCase } from "@application/usecases/meetingRooms/ListMeetingRoomsUseCase";
-import { CancelReservationUseCase } from "@application/usecases/reservations/CancelReservationUseCase";
-import { CreateReservationUseCase } from "@application/usecases/reservations/CreateReservationUseCase";
-import { GetReservationUseCase } from "@application/usecases/reservations/GetReservationUseCase";
-import { ListReservationsUseCase } from "@application/usecases/reservations/ListReservationsUseCase";
-import { EquipmentController } from "@interface/controllers/EquipmentController";
-import { MeetingRoomController } from "@interface/controllers/MeetingRoomController";
-import { ReservationController } from "@interface/controllers/ReservationController";
 import { InMemoryEquipmentRepository } from "@infrastructure/repositories/InMemoryEquipmentRepository";
 import { InMemoryMeetingRoomRepository } from "@infrastructure/repositories/InMemoryMeetingRoomRepository";
 import { InMemoryReservationRepository } from "@infrastructure/repositories/InMemoryReservationRepository";
+import { createEquipmentRoutes } from "@infrastructure/web/routeFactories/equipmentRoutes";
+import { createMeetingRoomRoutes } from "@infrastructure/web/routeFactories/meetingRoomRoutes";
+import { createReservationRoutes } from "@infrastructure/web/routeFactories/reservationRoutes";
 import { SystemClock } from "@infrastructure/services/SystemClock";
 import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
 
@@ -26,39 +18,28 @@ export function createRoutes(): Router {
   const idGenerator = new UuidGenerator();
   const clock = new SystemClock();
 
-  const meetingRoomController = new MeetingRoomController(
-    new CreateMeetingRoomUseCase(meetingRoomRepository, idGenerator, clock),
-    new ListMeetingRoomsUseCase(meetingRoomRepository),
+  router.use(
+    createMeetingRoomRoutes({
+      meetingRoomRepository,
+      idGenerator,
+      clock,
+    }),
   );
-  const equipmentController = new EquipmentController(
-    new CreateEquipmentUseCase(equipmentRepository, idGenerator, clock),
-    new ListEquipmentsUseCase(equipmentRepository),
+  router.use(
+    createEquipmentRoutes({
+      equipmentRepository,
+      idGenerator,
+      clock,
+    }),
   );
-  const reservationController = new ReservationController(
-    new CreateReservationUseCase(
+  router.use(
+    createReservationRoutes({
       reservationRepository,
       meetingRoomRepository,
       equipmentRepository,
       idGenerator,
       clock,
-    ),
-    new ListReservationsUseCase(reservationRepository),
-    new GetReservationUseCase(reservationRepository),
-    new CancelReservationUseCase(reservationRepository, clock),
-  );
-
-  router.post("/meeting-rooms", meetingRoomController.create);
-  router.get("/meeting-rooms", meetingRoomController.list);
-
-  router.post("/equipments", equipmentController.create);
-  router.get("/equipments", equipmentController.list);
-
-  router.post("/reservations", reservationController.create);
-  router.get("/reservations", reservationController.list);
-  router.get("/reservations/:reservationId", reservationController.get);
-  router.patch(
-    "/reservations/:reservationId/cancel",
-    reservationController.cancel,
+    }),
   );
 
   return router;
