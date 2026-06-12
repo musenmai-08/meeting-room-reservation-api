@@ -6,6 +6,7 @@ export default defineConfig({
 		alias: {
 			"@application": path.resolve(__dirname, "src/application"),
 			"@domain": path.resolve(__dirname, "src/domain"),
+			"@interface": path.resolve(__dirname, "src/interface"),
 			"@infrastructure": path.resolve(__dirname, "src/infrastructure"),
 		},
 	},

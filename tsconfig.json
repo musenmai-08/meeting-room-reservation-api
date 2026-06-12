@@ -11,6 +11,7 @@
 		"paths": {
 			"@application/*": ["./src/application/*"],
 			"@domain/*": ["./src/domain/*"],
+			"@interface/*": ["./src/interface/*"],
 			"@infrastructure/*": ["./src/infrastructure/*"]
 		},
 		"types": ["node"]
