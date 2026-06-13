@@ -1,0 +1,19 @@
+package.json
+  s_149403cdd19328::t_8dc3f2922e32f2 24,30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "e634e7f0f745ed06746a2caf4fff64acf00821f8",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
