@@ -1,0 +1,35 @@
+src/infrastructure/web/routes.ts
+  s_149403cdd19328::t_1746eca056e25d 6
+  h_ae5b095b1dd8a4 45-49
+src/interface/presenters/AvailableResourcePresenter.ts
+  h_ae5b095b1dd8a4 1-29
+docs/testing/api.md
+  s_149403cdd19328::t_8ca6ed32cd3797 56-62
+src/infrastructure/web/routeFactories/availableResourceRoutes.ts
+  h_ae5b095b1dd8a4 1-6,8-30
+  s_149403cdd19328::t_99d3a1b026b12c 7
+src/interface/controllers/AvailableResourceController.ts
+  h_ae5b095b1dd8a4 1-4,6-76,87-99
+  s_149403cdd19328::t_8f3348adbcda27 5,77-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "cf4dd1ad7c60edf82d416b84f023e66a40a2a60d",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
