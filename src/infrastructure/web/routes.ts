@@ -3,6 +3,7 @@ import { Router } from "express";
 import { InMemoryEquipmentRepository } from "@infrastructure/repositories/InMemoryEquipmentRepository";
 import { InMemoryMeetingRoomRepository } from "@infrastructure/repositories/InMemoryMeetingRoomRepository";
 import { InMemoryReservationRepository } from "@infrastructure/repositories/InMemoryReservationRepository";
+import { createAvailableResourceRoutes } from "@infrastructure/web/routeFactories/availableResourceRoutes";
 import { createEquipmentRoutes } from "@infrastructure/web/routeFactories/equipmentRoutes";
 import { createMeetingRoomRoutes } from "@infrastructure/web/routeFactories/meetingRoomRoutes";
 import { createReservationRoutes } from "@infrastructure/web/routeFactories/reservationRoutes";
@@ -39,6 +40,13 @@ export function createRoutes(): Router {
       equipmentRepository,
       idGenerator,
       clock,
+    }),
+  );
+  router.use(
+    createAvailableResourceRoutes({
+      meetingRoomRepository,
+      equipmentRepository,
+      reservationRepository,
     }),
   );
 
