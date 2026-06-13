@@ -1,0 +1,28 @@
+tests/api/meetingRooms.test.ts
+  s_149403cdd19328::t_fa356bc7b69c71 2-4,7,9-112,142-239
+  s_149403cdd19328::t_19e3a0289e8157 1,5-6,8,115,131-141
+  s_149403cdd19328::t_e1178b2464b035 113-114,116,118-120,122-124,127
+src/interface/controllers/MeetingRoomController.ts
+  h_ae5b095b1dd8a4 42,109-119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "40f12a3fd148d41d9ff88a8b481afb46729172af",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
