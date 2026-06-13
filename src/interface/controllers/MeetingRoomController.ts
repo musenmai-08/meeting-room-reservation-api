@@ -1,7 +1,6 @@
 import { type Request, type Response } from "express";
 import { z } from "zod";
 
-import { ApplicationError } from "@application/errors/ApplicationError";
 import { MeetingRoomAlreadyExistsError } from "@application/errors/MeetingRoomApplicationErrors";
 import { CreateMeetingRoomUseCase } from "@application/usecases/meetingRooms/CreateMeetingRoomUseCase";
 import { ListMeetingRoomsUseCase } from "@application/usecases/meetingRooms/ListMeetingRoomsUseCase";
@@ -38,7 +37,10 @@ export class MeetingRoomController {
     private readonly listMeetingRoomsUseCase: ListMeetingRoomsUseCase,
   ) {}
 
-  public create = async (request: Request, response: Response): Promise<void> => {
+  public create = async (
+    request: Request,
+    response: Response,
+  ): Promise<void> => {
     try {
       const body = createMeetingRoomRequestBodySchema.parse(request.body);
       const input = {
@@ -104,15 +106,17 @@ export class MeetingRoomController {
       return;
     }
 
-    if (error instanceof ApplicationError) {
-      response.status(400).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
-      return;
-    }
+    // 現状 MeetingRoomAlreadyExistsError で ApplicationError は対応できており、
+    // 下記の分岐に到達するパターンがほぼないのでコメントアウト
+    // if (error instanceof ApplicationError) {
+    //   response.status(400).json({
+    //     error: {
+    //       code: error.code,
+    //       message: error.message,
+    //     },
+    //   });
+    //   return;
+    // }
 
     response.status(500).json({
       error: {
