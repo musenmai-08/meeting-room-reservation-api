@@ -1,0 +1,20 @@
+tests/api/availableResources.test.ts
+  s_149403cdd19328::t_d0785a5d0dee13 1,5,7,320-342
+  s_149403cdd19328::t_7d369119562536 2-4,6,8-319,343-345
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "6e44ac1d78268780ab81ea237cbff52c96357a6c",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
