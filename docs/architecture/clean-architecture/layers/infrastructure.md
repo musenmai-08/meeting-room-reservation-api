@@ -35,6 +35,10 @@ Prisma は DB アクセスの詳細です。
 
 Domain Entity や UseCase が Prisma の型に依存しないようにします。Prisma のモデルと Domain Entity の相互変換は Prisma Repository の中に閉じ込めます。
 
+Prisma Repository の詳細方針は以下にまとめます。
+
+- [Prisma Repository Design](../infrastructure/prisma-repository.md)
+
 ## Express
 
 Express は Web フレームワークの詳細です。
@@ -46,4 +50,3 @@ Express の request / response は Controller までに留め、UseCase や Doma
 現在日時取得と ID 生成も Infrastructure 層の責務です。
 
 UseCase は `Clock` や `IdGenerator` の Interface に依存し、Infrastructure 層が `SystemClock` や `UuidGenerator` として実装します。
-
