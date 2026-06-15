@@ -11,3 +11,40 @@ generator client {
 datasource db {
   provider = "sqlite"
 }
+
+model MeetingRoom {
+  id          String   @id
+  name        String   @unique
+  capacity    Int
+  location    String?
+  description String?
+  createdAt   DateTime
+  updatedAt   DateTime
+}
+
+model Equipment {
+  id          String   @id
+  name        String   @unique
+  category    String
+  location    String?
+  description String?
+  createdAt   DateTime
+  updatedAt   DateTime
+}
+
+model Reservation {
+  id           String    @id
+  resourceType String
+  resourceId   String
+  userId       String
+  startAt      DateTime
+  endAt        DateTime
+  purpose      String
+  status       String
+  cancelledAt  DateTime?
+  createdAt    DateTime
+  updatedAt    DateTime
+
+  @@index([resourceType, resourceId])
+  @@index([resourceType, startAt, endAt])
+}
