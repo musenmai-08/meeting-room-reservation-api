@@ -1,0 +1,42 @@
+package.json
+  s_149403cdd19328::t_cb68f3f19492a0 40
+  s_149403cdd19328::t_645a44accf520c 37,39
+src/infrastructure/prisma/repositories/PrismaReservationRepository.ts
+  s_149403cdd19328::t_94c0dc97fe8422 1-137
+src/infrastructure/prisma/prismaClient.ts
+  h_ae5b095b1dd8a4 6-10,14
+  s_149403cdd19328::t_ee919415c353e7 4,13
+  s_149403cdd19328::t_e81e1e9e18f3c5 1-3,5,11-12
+src/infrastructure/prisma/mappers/ReservationPrismaMapper.ts
+  s_149403cdd19328::t_30dc562d2572ab 3-4,37
+  s_149403cdd19328::t_c82c3a3df90b54 1-2,5-36,38-43
+src/infrastructure/prisma/repositories/PrismaEquipmentRepository.ts
+  h_ae5b095b1dd8a4 1-75
+src/infrastructure/prisma/mappers/EquipmentPrismaMapper.ts
+  h_ae5b095b1dd8a4 1-32
+src/infrastructure/prisma/repositories/PrismaMeetingRoomRepository.ts
+  s_149403cdd19328::t_a8d2a1b9937dcd 1-77
+src/infrastructure/prisma/mappers/MeetingRoomPrismaMapper.ts
+  s_149403cdd19328::t_91af23813ed714 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "bf320875950a8a967561c187f4aa35620467f828",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
