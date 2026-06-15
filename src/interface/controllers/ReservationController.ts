@@ -1,7 +1,6 @@
 import { type Request, type Response } from "express";
 import { z } from "zod";
 
-import { ApplicationError } from "@application/errors/ApplicationError";
 import {
   ReservationConflictError,
   ReservationNotFoundError,
@@ -68,7 +67,10 @@ export class ReservationController {
     private readonly cancelReservationUseCase: CancelReservationUseCase,
   ) {}
 
-  public create = async (request: Request, response: Response): Promise<void> => {
+  public create = async (
+    request: Request,
+    response: Response,
+  ): Promise<void> => {
     try {
       const body = createReservationRequestBodySchema.parse(request.body);
       const output = await this.createReservationUseCase.execute({
@@ -186,7 +188,7 @@ export class ReservationController {
       return;
     }
 
-    if (error instanceof DomainError || error instanceof ApplicationError) {
+    if (error instanceof DomainError) {
       response.status(400).json({
         error: {
           code: error.code,
@@ -195,6 +197,18 @@ export class ReservationController {
       });
       return;
     }
+
+    // 現状 これ以前の分岐 で ApplicationError は対応できており、
+    // 下記の分岐に到達するパターンがほぼないのでコメントアウト
+    // if (error instanceof ApplicationError) {
+    //   response.status(400).json({
+    //     error: {
+    //       code: error.code,
+    //       message: error.message,
+    //     },
+    //   });
+    //   return;
+    // }
 
     response.status(500).json({
       error: {
