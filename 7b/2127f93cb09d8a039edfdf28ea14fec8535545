@@ -1,0 +1,21 @@
+docs/architecture/clean-architecture/infrastructure/prisma-repository.md
+  s_149403cdd19328::t_3f42820038036b 1-228
+docs/architecture/clean-architecture/layers/infrastructure.md
+  s_149403cdd19328::t_7812ffcecbfa34 38-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "7b2127f93cb09d8a039edfdf28ea14fec8535545",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
