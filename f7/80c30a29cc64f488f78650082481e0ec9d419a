@@ -1,0 +1,27 @@
+tests/api/equipments.test.ts
+  s_149403cdd19328::t_0587b2711d75ac 2-4,7,9-112,142-254
+  s_149403cdd19328::t_608e5ba9f8f54b 1,5-6,8,113-141
+src/interface/controllers/EquipmentController.ts
+  h_ae5b095b1dd8a4 40,106-116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "f780c30a29cc64f488f78650082481e0ec9d419a",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
