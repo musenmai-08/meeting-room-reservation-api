@@ -1,0 +1,27 @@
+src/interface/http/errorResponse.ts
+  s_149403cdd19328::t_4fa67b2356cf0d 1-58
+src/interface/controllers/AvailableResourceController.ts
+  s_149403cdd19328::t_4c3b188970fad3 8-12,74,79,83
+src/interface/controllers/EquipmentController.ts
+  s_149403cdd19328::t_9b9f2aecdfc565 9-14,79,84,89,93
+src/interface/controllers/ReservationController.ts
+  s_149403cdd19328::t_bb8f4910410f7b 20-25,148,156,164,169,174,178
+src/interface/controllers/MeetingRoomController.ts
+  s_149403cdd19328::t_aba8f13a4836e6 8-13,82,87,92,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "e42e5d0108c432f8d050805232d4d215d789d53e",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
