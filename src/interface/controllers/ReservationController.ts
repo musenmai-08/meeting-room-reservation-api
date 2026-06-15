@@ -17,6 +17,12 @@ import {
 import { DomainError } from "@domain/errors/DomainError";
 import { ReservationStatus } from "@domain/valueObjects/ReservationStatus";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
+import {
+  sendDomainErrorResponse,
+  sendErrorResponse,
+  sendInternalServerErrorResponse,
+  sendZodValidationErrorResponse,
+} from "@interface/http/errorResponse";
 import { ReservationPresenter } from "@interface/presenters/ReservationPresenter";
 
 const resourceTypeSchema = z.enum([
@@ -139,16 +145,7 @@ export class ReservationController {
 
   private handleError(error: unknown, response: Response): void {
     if (error instanceof z.ZodError) {
-      response.status(400).json({
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "Invalid request.",
-          details: error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            message: issue.message,
-          })),
-        },
-      });
+      sendZodValidationErrorResponse(response, error);
       return;
     }
 
@@ -156,12 +153,7 @@ export class ReservationController {
       error instanceof ResourceNotFoundError ||
       error instanceof ReservationNotFoundError
     ) {
-      response.status(404).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
+      sendErrorResponse(response, 404, error.code, error.message);
       return;
     }
 
@@ -169,52 +161,20 @@ export class ReservationController {
       error instanceof ReservationConflictError ||
       error instanceof AlreadyCancelledError
     ) {
-      response.status(409).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
+      sendErrorResponse(response, 409, error.code, error.message);
       return;
     }
 
     if (error instanceof ReservationCancellationForbiddenError) {
-      response.status(403).json({
-        error: {
-          code: "FORBIDDEN",
-          message: error.message,
-        },
-      });
+      sendErrorResponse(response, 403, "FORBIDDEN", error.message);
       return;
     }
 
     if (error instanceof DomainError) {
-      response.status(400).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
+      sendDomainErrorResponse(response, error);
       return;
     }
 
-    // 現状 これ以前の分岐 で ApplicationError は対応できており、
-    // 下記の分岐に到達するパターンがほぼないのでコメントアウト
-    // if (error instanceof ApplicationError) {
-    //   response.status(400).json({
-    //     error: {
-    //       code: error.code,
-    //       message: error.message,
-    //     },
-    //   });
-    //   return;
-    // }
-
-    response.status(500).json({
-      error: {
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Unexpected error.",
-      },
-    });
+    sendInternalServerErrorResponse(response);
   }
 }

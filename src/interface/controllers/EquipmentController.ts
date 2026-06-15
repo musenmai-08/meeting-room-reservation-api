@@ -6,6 +6,12 @@ import { CreateEquipmentUseCase } from "@application/usecases/equipments/CreateE
 import { ListEquipmentsUseCase } from "@application/usecases/equipments/ListEquipmentsUseCase";
 import { DomainError } from "@domain/errors/DomainError";
 import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
+import {
+  sendDomainErrorResponse,
+  sendErrorResponse,
+  sendInternalServerErrorResponse,
+  sendZodValidationErrorResponse,
+} from "@interface/http/errorResponse";
 import { EquipmentPresenter } from "@interface/presenters/EquipmentPresenter";
 
 const equipmentCategorySchema = z.enum([
@@ -70,56 +76,20 @@ export class EquipmentController {
 
   private handleError(error: unknown, response: Response): void {
     if (error instanceof z.ZodError) {
-      response.status(400).json({
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "Invalid request.",
-          details: error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            message: issue.message,
-          })),
-        },
-      });
+      sendZodValidationErrorResponse(response, error);
       return;
     }
 
     if (error instanceof DomainError) {
-      response.status(400).json({
-        error: {
-          code: "VALIDATION_ERROR",
-          message: error.message,
-        },
-      });
+      sendDomainErrorResponse(response, error, { code: "VALIDATION_ERROR" });
       return;
     }
 
     if (error instanceof EquipmentAlreadyExistsError) {
-      response.status(409).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
+      sendErrorResponse(response, 409, error.code, error.message);
       return;
     }
 
-    // 現状 EquipmentAlreadyExistsError で ApplicationError は対応できており、
-    // 下記の分岐に到達するパターンがほぼないのでコメントアウト
-    // if (error instanceof ApplicationError) {
-    //   response.status(400).json({
-    //     error: {
-    //       code: error.code,
-    //       message: error.message,
-    //     },
-    //   });
-    //   return;
-    // }
-
-    response.status(500).json({
-      error: {
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Unexpected error.",
-      },
-    });
+    sendInternalServerErrorResponse(response);
   }
 }

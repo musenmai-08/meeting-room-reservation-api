@@ -5,6 +5,11 @@ import { SearchAvailableResourcesUseCase } from "@application/usecases/resources
 import { DomainError } from "@domain/errors/DomainError";
 import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
+import {
+  sendDomainErrorResponse,
+  sendInternalServerErrorResponse,
+  sendZodValidationErrorResponse,
+} from "@interface/http/errorResponse";
 import { AvailableResourcePresenter } from "@interface/presenters/AvailableResourcePresenter";
 
 const resourceTypeSchema = z.enum([
@@ -66,34 +71,15 @@ export class AvailableResourceController {
 
   private handleError(error: unknown, response: Response): void {
     if (error instanceof z.ZodError) {
-      response.status(400).json({
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "Invalid request.",
-          details: error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            message: issue.message,
-          })),
-        },
-      });
+      sendZodValidationErrorResponse(response, error);
       return;
     }
 
     if (error instanceof DomainError) {
-      response.status(400).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
+      sendDomainErrorResponse(response, error);
       return;
     }
 
-    response.status(500).json({
-      error: {
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Unexpected error.",
-      },
-    });
+    sendInternalServerErrorResponse(response);
   }
 }
