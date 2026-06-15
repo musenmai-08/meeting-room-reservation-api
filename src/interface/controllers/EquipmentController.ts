@@ -1,7 +1,6 @@
 import { type Request, type Response } from "express";
 import { z } from "zod";
 
-import { ApplicationError } from "@application/errors/ApplicationError";
 import { EquipmentAlreadyExistsError } from "@application/errors/EquipmentApplicationErrors";
 import { CreateEquipmentUseCase } from "@application/usecases/equipments/CreateEquipmentUseCase";
 import { ListEquipmentsUseCase } from "@application/usecases/equipments/ListEquipmentsUseCase";
@@ -36,7 +35,10 @@ export class EquipmentController {
     private readonly listEquipmentsUseCase: ListEquipmentsUseCase,
   ) {}
 
-  public create = async (request: Request, response: Response): Promise<void> => {
+  public create = async (
+    request: Request,
+    response: Response,
+  ): Promise<void> => {
     try {
       const body = createEquipmentRequestBodySchema.parse(request.body);
       const output = await this.createEquipmentUseCase.execute({
@@ -101,15 +103,17 @@ export class EquipmentController {
       return;
     }
 
-    if (error instanceof ApplicationError) {
-      response.status(400).json({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
-      return;
-    }
+    // 現状 EquipmentAlreadyExistsError で ApplicationError は対応できており、
+    // 下記の分岐に到達するパターンがほぼないのでコメントアウト
+    // if (error instanceof ApplicationError) {
+    //   response.status(400).json({
+    //     error: {
+    //       code: error.code,
+    //       message: error.message,
+    //     },
+    //   });
+    //   return;
+    // }
 
     response.status(500).json({
       error: {
