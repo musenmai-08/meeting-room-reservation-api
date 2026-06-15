@@ -1,0 +1,27 @@
+src/interface/controllers/ReservationController.ts
+  h_ae5b095b1dd8a4 72,191,201-211
+tests/api/reservations.test.ts
+  s_149403cdd19328::t_93f27cf05b47eb 2-4,9,11-149,169-208,251-461
+  s_149403cdd19328::t_f574d90e04d7e9 1,5-8,10,150-168,209-250
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "e2e8db4592038f827eea1e218a586378650be2a8",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
