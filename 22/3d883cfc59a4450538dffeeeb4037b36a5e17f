@@ -1,0 +1,28 @@
+README.md
+  s_149403cdd19328::t_bea3175804958b 130-135,139
+docs/features/resource-unavailable-periods.md
+  s_149403cdd19328::t_587c9c88ba2877 1-516
+docs/requirements.md
+  s_149403cdd19328::t_38b274997ff03d 46-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "223d883cfc59a4450538dffeeeb4037b36a5e17f",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
