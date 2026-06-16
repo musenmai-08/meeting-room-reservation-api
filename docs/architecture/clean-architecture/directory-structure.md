@@ -1,77 +1,95 @@
 # Directory Structure
 
-最終的な `src` 配下は、以下の構成を目指します。
+現在の `src` 配下は、以下の構成です。
 
 ```txt
 src
-  domain
-    entities
-      MeetingRoom.ts
-      Equipment.ts
-      Reservation.ts
-    valueObjects
-      ReservationPeriod.ts
-      ResourceType.ts
-      ReservationStatus.ts
-      EquipmentCategory.ts
-    services
-      ReservationConflictService.ts
-    errors
-      DomainError.ts
-
-  application
-    usecases
-      reservations
-        CreateReservationUseCase.ts
-        CancelReservationUseCase.ts
-        GetReservationUseCase.ts
-        ListReservationsUseCase.ts
-      resources
-        SearchAvailableResourcesUseCase.ts
-      meetingRooms
-        CreateMeetingRoomUseCase.ts
-        ListMeetingRoomsUseCase.ts
-      equipments
-        CreateEquipmentUseCase.ts
-        ListEquipmentsUseCase.ts
-    repositories
-      ReservationRepository.ts
-      MeetingRoomRepository.ts
-      EquipmentRepository.ts
-    services
-      Clock.ts
-      IdGenerator.ts
-
-  interface
-    controllers
-      ReservationController.ts
-      MeetingRoomController.ts
-      EquipmentController.ts
-      AvailableResourceController.ts
-    presenters
-      ReservationPresenter.ts
-      MeetingRoomPresenter.ts
-      EquipmentPresenter.ts
-
-  infrastructure
-    database
-      prisma
-        client.ts
-    repositories
-      InMemoryReservationRepository.ts
-      InMemoryMeetingRoomRepository.ts
-      InMemoryEquipmentRepository.ts
-      PrismaReservationRepository.ts
-      PrismaMeetingRoomRepository.ts
-      PrismaEquipmentRepository.ts
-    services
-      SystemClock.ts
-      UuidGenerator.ts
-    web
-      server.ts
-      routes.ts
-
-  main.ts
+|-- domain
+|   |-- entities
+|   |   |-- MeetingRoom.ts
+|   |   |-- Equipment.ts
+|   |   `-- Reservation.ts
+|   |-- valueObjects
+|   |   |-- ReservationPeriod.ts
+|   |   |-- ResourceType.ts
+|   |   |-- ReservationStatus.ts
+|   |   `-- EquipmentCategory.ts
+|   |-- services
+|   |   `-- ReservationConflictService.ts
+|   `-- errors
+|       |-- DomainError.ts
+|       |-- MeetingRoomErrors.ts
+|       |-- EquipmentErrors.ts
+|       |-- ReservationErrors.ts
+|       `-- ResourceErrors.ts
+|-- application
+|   |-- errors
+|   |   |-- ApplicationError.ts
+|   |   |-- MeetingRoomApplicationErrors.ts
+|   |   |-- EquipmentApplicationErrors.ts
+|   |   |-- ReservationApplicationErrors.ts
+|   |   `-- ResourceApplicationErrors.ts
+|   |-- usecases
+|   |   |-- reservations
+|   |   |   |-- CreateReservationUseCase.ts
+|   |   |   |-- CancelReservationUseCase.ts
+|   |   |   |-- GetReservationUseCase.ts
+|   |   |   `-- ListReservationsUseCase.ts
+|   |   |-- resources
+|   |   |   `-- SearchAvailableResourcesUseCase.ts
+|   |   |-- meetingRooms
+|   |   |   |-- CreateMeetingRoomUseCase.ts
+|   |   |   `-- ListMeetingRoomsUseCase.ts
+|   |   `-- equipments
+|   |       |-- CreateEquipmentUseCase.ts
+|   |       `-- ListEquipmentsUseCase.ts
+|   |-- repositories
+|   |   |-- ReservationRepository.ts
+|   |   |-- MeetingRoomRepository.ts
+|   |   `-- EquipmentRepository.ts
+|   `-- services
+|       |-- Clock.ts
+|       `-- IdGenerator.ts
+|-- interface
+|   |-- controllers
+|   |   |-- ReservationController.ts
+|   |   |-- MeetingRoomController.ts
+|   |   |-- EquipmentController.ts
+|   |   `-- AvailableResourceController.ts
+|   |-- presenters
+|   |   |-- ReservationPresenter.ts
+|   |   |-- MeetingRoomPresenter.ts
+|   |   |-- EquipmentPresenter.ts
+|   |   `-- AvailableResourcePresenter.ts
+|   `-- http
+|       `-- errorResponse.ts
+|-- infrastructure
+|   |-- prisma
+|   |   |-- prismaClient.ts
+|   |   |-- mappers
+|   |   |   |-- MeetingRoomPrismaMapper.ts
+|   |   |   |-- EquipmentPrismaMapper.ts
+|   |   |   `-- ReservationPrismaMapper.ts
+|   |   `-- repositories
+|   |       |-- PrismaReservationRepository.ts
+|   |       |-- PrismaMeetingRoomRepository.ts
+|   |       `-- PrismaEquipmentRepository.ts
+|   |-- repositories
+|   |   |-- InMemoryReservationRepository.ts
+|   |   |-- InMemoryMeetingRoomRepository.ts
+|   |   `-- InMemoryEquipmentRepository.ts
+|   |-- services
+|   |   |-- SystemClock.ts
+|   |   `-- UuidGenerator.ts
+|   `-- web
+|       |-- routeFactories
+|       |   |-- meetingRoomRoutes.ts
+|       |   |-- equipmentRoutes.ts
+|       |   |-- reservationRoutes.ts
+|       |   `-- availableResourceRoutes.ts
+|       |-- server.ts
+|       `-- routes.ts
+`-- main.ts
 ```
 
 ## Domain
@@ -97,4 +115,3 @@ Controller、Presenter、Request DTO、Response DTO などを置きます。
 外部技術に依存する具体実装を置きます。
 
 Express の server / routes、Prisma Client、Repository 実装、現在日時取得、ID 生成などを扱います。
-

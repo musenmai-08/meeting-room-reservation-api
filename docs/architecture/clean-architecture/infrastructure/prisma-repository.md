@@ -1,6 +1,6 @@
 # Prisma Repository Design
 
-このドキュメントは、Prisma Repository を実装する前に決めておく設計方針をまとめるものです。
+このドキュメントは、Prisma Repository の設計方針と現在の実装をまとめるものです。
 
 Prisma Repository は Infrastructure 層の実装です。Application 層の Repository Interface を実装し、DB と Domain Entity の変換を担当します。
 
@@ -21,26 +21,26 @@ Prisma Repository は Infrastructure 層の実装です。Application 層の Rep
 
 ## 配置
 
-予定する配置:
+現在の配置:
 
 ```txt
 src/infrastructure/prisma/
-  prismaClient.ts
-  mappers/
-    MeetingRoomPrismaMapper.ts
-    EquipmentPrismaMapper.ts
-    ReservationPrismaMapper.ts
-  repositories/
-    PrismaMeetingRoomRepository.ts
-    PrismaEquipmentRepository.ts
-    PrismaReservationRepository.ts
+|-- prismaClient.ts
+|-- mappers/
+|   |-- MeetingRoomPrismaMapper.ts
+|   |-- EquipmentPrismaMapper.ts
+|   `-- ReservationPrismaMapper.ts
+`-- repositories/
+    |-- PrismaMeetingRoomRepository.ts
+    |-- PrismaEquipmentRepository.ts
+    `-- PrismaReservationRepository.ts
 ```
 
 既存の InMemory Repository は学習用・テスト用 Fake として残します。
 
 ## Prisma Schema 方針
 
-`prisma/schema.prisma` には、まず次の model を定義します。
+`prisma/schema.prisma` には、次の model を定義しています。
 
 ```txt
 MeetingRoom
@@ -102,6 +102,13 @@ updatedAt
 
 `resourceType` と `resourceId` の組み合わせで、会議室予約と備品予約の両方を表現します。
 
+検索で使うため、Reservation には以下の index を定義しています。
+
+```txt
+@@index([resourceType, resourceId])
+@@index([resourceType, startAt, endAt])
+```
+
 ## Enum / Value Object の保存方針
 
 Domain の Value Object は DB へそのまま保存しません。
@@ -130,6 +137,8 @@ Date は Prisma / DB では `DateTime` として保存します。
 API では ISO 8601 文字列を受け取り、Controller で `Date` に変換します。
 
 Domain / UseCase / Repository では `Date` として扱います。
+
+HTTP response では `Date#toISOString()` を使うため、日時は `Z` 付きの UTC 文字列になります。
 
 ## Mapper 方針
 
@@ -214,15 +223,17 @@ Prisma Repository のテストは Integration Test として扱います。
 
 これらは Domain / UseCase / API テストで確認済みのため、Repository テストでは DB との変換と検索条件に集中します。
 
-## 実装順
+## 実装状況
 
-1. `schema.prisma` に model を定義する
-2. migration を作成する
-3. Prisma Client を生成する
-4. `prismaClient.ts` を作る
-5. Mapper を作る
-6. `PrismaMeetingRoomRepository` を実装する
-7. `PrismaEquipmentRepository` を実装する
-8. `PrismaReservationRepository` を実装する
-9. Repository Integration Test を書く
-10. `routes.ts` の Repository 実装を Prisma へ差し替える
+以下は実装済みです。
+
+- `schema.prisma` の model 定義
+- migration 作成
+- Prisma Client 生成
+- `prismaClient.ts`
+- Prisma Mapper
+- Prisma Repository
+- Repository Integration Test
+- `routes.ts` での Prisma Repository 差し替え
+
+Prisma Client は `src/generated/prisma` に生成します。このディレクトリは git 管理外のため、初回セットアップ時や schema 変更後は `npx prisma generate` を実行します。

@@ -4,7 +4,7 @@ UseCase 層では、Repository Interface に対して InMemory Repository を差
 
 Domain 層で確認済みの細かい業務ルールを、UseCase テストで過剰に再テストしません。UseCase では、入力を受け取り、必要な Repository を呼び、Domain のルールを使い、保存し、適切な出力またはエラーを返せることを確認します。
 
-このファイルは UseCase 実装が進んだ段階で具体化します。
+このファイルは実装済み UseCase のテスト観点をまとめます。
 
 ## CreateMeetingRoomUseCase
 
