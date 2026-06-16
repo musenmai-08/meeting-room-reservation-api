@@ -1,11 +1,16 @@
-import express from "express";
+import express, { type Express } from "express";
 import request from "supertest";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { type CreateEquipmentUseCase } from "@application/usecases/equipments/CreateEquipmentUseCase";
 import { type ListEquipmentsUseCase } from "@application/usecases/equipments/ListEquipmentsUseCase";
-import { createServer } from "@infrastructure/web/server";
+import { PrismaEquipmentRepository } from "@infrastructure/prisma/repositories/PrismaEquipmentRepository";
+import { SystemClock } from "@infrastructure/services/SystemClock";
+import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
+import { createEquipmentRoutes } from "@infrastructure/web/routeFactories/equipmentRoutes";
 import { EquipmentController } from "@interface/controllers/EquipmentController";
+import { PrismaClient } from "../../src/generated/prisma/client";
+import { createPrismaTestDatabase } from "../infrastructure/prisma/prismaTestDatabase";
 
 const createEquipmentRequestBody = {
   name: "Projector_A",
@@ -15,10 +20,36 @@ const createEquipmentRequestBody = {
 };
 
 describe("Equipment API", () => {
+  let app: Express;
+  let client: PrismaClient;
+  let cleanupDatabase: () => Promise<void>;
+
+  beforeAll(async () => {
+    const testDatabase = await createPrismaTestDatabase();
+    client = testDatabase.client;
+    cleanupDatabase = testDatabase.cleanup;
+
+    app = express();
+    app.use(express.json());
+    app.use(
+      createEquipmentRoutes({
+        equipmentRepository: new PrismaEquipmentRepository(client),
+        idGenerator: new UuidGenerator(),
+        clock: new SystemClock(),
+      }),
+    );
+  });
+
+  beforeEach(async () => {
+    await client.equipment.deleteMany();
+  });
+
+  afterAll(async () => {
+    await cleanupDatabase();
+  });
+
   describe("POST /equipments", () => {
     it("[正常系] request body が正しい場合、備品を作成して 201 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/equipments")
         .send(createEquipmentRequestBody)
@@ -36,8 +67,6 @@ describe("Equipment API", () => {
     });
 
     it("[異常系] request body の必須項目が不足している場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/equipments")
         .send({
@@ -56,8 +85,6 @@ describe("Equipment API", () => {
     });
 
     it("[異常系] category が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/equipments")
         .send({
@@ -77,8 +104,6 @@ describe("Equipment API", () => {
     });
 
     it("[異常系] name が境界値未満の場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/equipments")
         .send({
@@ -93,8 +118,6 @@ describe("Equipment API", () => {
     });
 
     it("[異常系] 同名の備品が存在する場合、409 を返す", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/equipments")
         .send(createEquipmentRequestBody)
@@ -145,8 +168,6 @@ describe("Equipment API", () => {
 
   describe("GET /equipments", () => {
     it("[正常系] 備品一覧を 200 で取得できる", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/equipments")
         .send(createEquipmentRequestBody)
@@ -168,8 +189,6 @@ describe("Equipment API", () => {
     });
 
     it("[正常系] category で備品一覧を絞り込める", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/equipments")
         .send({
@@ -201,8 +220,6 @@ describe("Equipment API", () => {
     });
 
     it("[正常系] location で備品一覧を絞り込める", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/equipments")
         .send({
@@ -234,8 +251,6 @@ describe("Equipment API", () => {
     });
 
     it("[異常系] category が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/equipments")
         .query({ category: "INVALID_CATEGORY" })

@@ -1,11 +1,16 @@
-import express from "express";
+import express, { type Express } from "express";
 import request from "supertest";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { type CreateMeetingRoomUseCase } from "@application/usecases/meetingRooms/CreateMeetingRoomUseCase";
 import { type ListMeetingRoomsUseCase } from "@application/usecases/meetingRooms/ListMeetingRoomsUseCase";
-import { createServer } from "@infrastructure/web/server";
+import { PrismaMeetingRoomRepository } from "@infrastructure/prisma/repositories/PrismaMeetingRoomRepository";
+import { SystemClock } from "@infrastructure/services/SystemClock";
+import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
+import { createMeetingRoomRoutes } from "@infrastructure/web/routeFactories/meetingRoomRoutes";
 import { MeetingRoomController } from "@interface/controllers/MeetingRoomController";
+import { PrismaClient } from "../../src/generated/prisma/client";
+import { createPrismaTestDatabase } from "../infrastructure/prisma/prismaTestDatabase";
 
 const createMeetingRoomRequestBody = {
   name: "会議室A",
@@ -15,10 +20,37 @@ const createMeetingRoomRequestBody = {
 };
 
 describe("MeetingRoom API", () => {
+  let app: Express;
+  let client: PrismaClient;
+  let cleanupDatabase: () => Promise<void>;
+
+  beforeAll(async () => {
+    const testDatabase = await createPrismaTestDatabase();
+    client = testDatabase.client;
+    cleanupDatabase = testDatabase.cleanup;
+
+    app = express();
+    app.use(express.json());
+    // MeetingRoom API の route だけを登録
+    app.use(
+      createMeetingRoomRoutes({
+        meetingRoomRepository: new PrismaMeetingRoomRepository(client),
+        idGenerator: new UuidGenerator(),
+        clock: new SystemClock(),
+      }),
+    );
+  });
+
+  beforeEach(async () => {
+    await client.meetingRoom.deleteMany();
+  });
+
+  afterAll(async () => {
+    await cleanupDatabase();
+  });
+
   describe("POST /meeting-rooms", () => {
     it("[正常系] request body が正しい場合、会議室を作成して 201 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/meeting-rooms")
         .send(createMeetingRoomRequestBody)
@@ -36,8 +68,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[異常系] request body の必須項目が不足している場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/meeting-rooms")
         .send({
@@ -56,8 +86,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[異常系] request body の型が不正な場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/meeting-rooms")
         .send({
@@ -77,8 +105,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[異常系] capacity が境界値未満の場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/meeting-rooms")
         .send({
@@ -93,8 +119,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[異常系] 同名の会議室が存在する場合、409 を返す", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/meeting-rooms")
         .send(createMeetingRoomRequestBody)
@@ -145,8 +169,6 @@ describe("MeetingRoom API", () => {
 
   describe("GET /meeting-rooms", () => {
     it("[正常系] 会議室一覧を 200 で取得できる", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/meeting-rooms")
         .send(createMeetingRoomRequestBody)
@@ -168,8 +190,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[正常系] capacityGte で会議室一覧を絞り込める", async () => {
-      const app = createServer();
-
       await request(app)
         .post("/meeting-rooms")
         .send({
@@ -201,8 +221,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[異常系] capacityGte が数値に変換できない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/meeting-rooms")
         .query({ capacityGte: "abc" })
@@ -219,8 +237,6 @@ describe("MeetingRoom API", () => {
     });
 
     it("[異常系] capacityGte が空文字の場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/meeting-rooms")
         .query({ capacityGte: "" })

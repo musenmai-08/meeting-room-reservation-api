@@ -1,10 +1,20 @@
-import express from "express";
+import express, { type Express } from "express";
 import request from "supertest";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { type SearchAvailableResourcesUseCase } from "@application/usecases/resources/SearchAvailableResourcesUseCase";
-import { createServer } from "@infrastructure/web/server";
+import { PrismaEquipmentRepository } from "@infrastructure/prisma/repositories/PrismaEquipmentRepository";
+import { PrismaMeetingRoomRepository } from "@infrastructure/prisma/repositories/PrismaMeetingRoomRepository";
+import { PrismaReservationRepository } from "@infrastructure/prisma/repositories/PrismaReservationRepository";
+import { SystemClock } from "@infrastructure/services/SystemClock";
+import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
+import { createAvailableResourceRoutes } from "@infrastructure/web/routeFactories/availableResourceRoutes";
+import { createEquipmentRoutes } from "@infrastructure/web/routeFactories/equipmentRoutes";
+import { createMeetingRoomRoutes } from "@infrastructure/web/routeFactories/meetingRoomRoutes";
+import { createReservationRoutes } from "@infrastructure/web/routeFactories/reservationRoutes";
 import { AvailableResourceController } from "@interface/controllers/AvailableResourceController";
+import { PrismaClient } from "../../src/generated/prisma/client";
+import { createPrismaTestDatabase } from "../infrastructure/prisma/prismaTestDatabase";
 
 const searchAvailableResourcesQuery = {
   resourceType: "MEETING_ROOM",
@@ -13,7 +23,7 @@ const searchAvailableResourcesQuery = {
 };
 
 const createMeetingRoom = async (
-  app: ReturnType<typeof createServer>,
+  app: Express,
   overrides: {
     name?: string;
     capacity?: number;
@@ -34,7 +44,7 @@ const createMeetingRoom = async (
 };
 
 const createEquipment = async (
-  app: ReturnType<typeof createServer>,
+  app: Express,
   overrides: {
     name?: string;
     category?: string;
@@ -55,7 +65,7 @@ const createEquipment = async (
 };
 
 const createReservation = async (
-  app: ReturnType<typeof createServer>,
+  app: Express,
   input: {
     resourceType: string;
     resourceId: string;
@@ -80,10 +90,67 @@ const createReservation = async (
 };
 
 describe("AvailableResource API", () => {
+  let app: Express;
+  let client: PrismaClient;
+  let cleanupDatabase: () => Promise<void>;
+
+  beforeAll(async () => {
+    const testDatabase = await createPrismaTestDatabase();
+    client = testDatabase.client;
+    cleanupDatabase = testDatabase.cleanup;
+
+    const meetingRoomRepository = new PrismaMeetingRoomRepository(client);
+    const equipmentRepository = new PrismaEquipmentRepository(client);
+    const reservationRepository = new PrismaReservationRepository(client);
+    const idGenerator = new UuidGenerator();
+    const clock = new SystemClock();
+
+    app = express();
+    app.use(express.json());
+    app.use(
+      createMeetingRoomRoutes({
+        meetingRoomRepository,
+        idGenerator,
+        clock,
+      }),
+    );
+    app.use(
+      createEquipmentRoutes({
+        equipmentRepository,
+        idGenerator,
+        clock,
+      }),
+    );
+    app.use(
+      createReservationRoutes({
+        reservationRepository,
+        meetingRoomRepository,
+        equipmentRepository,
+        idGenerator,
+        clock,
+      }),
+    );
+    app.use(
+      createAvailableResourceRoutes({
+        meetingRoomRepository,
+        equipmentRepository,
+        reservationRepository,
+      }),
+    );
+  });
+
+  beforeEach(async () => {
+    await client.reservation.deleteMany();
+    await client.meetingRoom.deleteMany();
+    await client.equipment.deleteMany();
+  });
+
+  afterAll(async () => {
+    await cleanupDatabase();
+  });
+
   describe("GET /available-resources", () => {
     it("[正常系] query parameter が正しい場合、予約可能な会議室一覧を 200 で返す", async () => {
-      const app = createServer();
-
       await createMeetingRoom(app, {
         name: "会議室A",
         capacity: 6,
@@ -105,8 +172,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[正常系] capacityGte で会議室一覧を絞り込める", async () => {
-      const app = createServer();
-
       await createMeetingRoom(app, {
         name: "会議室A",
         capacity: 4,
@@ -133,8 +198,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[正常系] category で備品一覧を絞り込める", async () => {
-      const app = createServer();
-
       await createEquipment(app, {
         name: "Projector_A",
         category: "PROJECTOR",
@@ -164,8 +227,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[異常系] resourceType が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/available-resources")
         .query({
@@ -185,8 +246,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[異常系] startAt が日時として不正な場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/available-resources")
         .query({
@@ -206,8 +265,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[異常系] startAt が endAt より後の場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/available-resources")
         .query({
@@ -223,8 +280,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[異常系] capacityGte が数値に変換できない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/available-resources")
         .query({
@@ -244,8 +299,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[異常系] category が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/available-resources")
         .query({
@@ -267,7 +320,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[正常系] 既存予約と重複するリソースは一覧に含まれない", async () => {
-      const app = createServer();
       const reservedMeetingRoomId = await createMeetingRoom(app, {
         name: "会議室A",
       });
@@ -292,7 +344,6 @@ describe("AvailableResource API", () => {
     });
 
     it("[正常系] キャンセル済み予約のみがあるリソースは一覧に含まれる", async () => {
-      const app = createServer();
       const meetingRoomId = await createMeetingRoom(app, {
         name: "会議室A",
       });

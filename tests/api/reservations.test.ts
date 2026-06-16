@@ -1,13 +1,21 @@
-import express from "express";
+import express, { type Express } from "express";
 import request from "supertest";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { type CancelReservationUseCase } from "@application/usecases/reservations/CancelReservationUseCase";
 import { type CreateReservationUseCase } from "@application/usecases/reservations/CreateReservationUseCase";
 import { type GetReservationUseCase } from "@application/usecases/reservations/GetReservationUseCase";
 import { type ListReservationsUseCase } from "@application/usecases/reservations/ListReservationsUseCase";
-import { createServer } from "@infrastructure/web/server";
+import { PrismaEquipmentRepository } from "@infrastructure/prisma/repositories/PrismaEquipmentRepository";
+import { PrismaMeetingRoomRepository } from "@infrastructure/prisma/repositories/PrismaMeetingRoomRepository";
+import { PrismaReservationRepository } from "@infrastructure/prisma/repositories/PrismaReservationRepository";
+import { SystemClock } from "@infrastructure/services/SystemClock";
+import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
+import { createMeetingRoomRoutes } from "@infrastructure/web/routeFactories/meetingRoomRoutes";
+import { createReservationRoutes } from "@infrastructure/web/routeFactories/reservationRoutes";
 import { ReservationController } from "@interface/controllers/ReservationController";
+import { PrismaClient } from "../../src/generated/prisma/client";
+import { createPrismaTestDatabase } from "../infrastructure/prisma/prismaTestDatabase";
 
 const createMeetingRoomRequestBody = {
   name: "会議室A",
@@ -24,9 +32,7 @@ const createReservationRequestBody = {
   purpose: "定例ミーティング",
 };
 
-const createMeetingRoom = async (
-  app: ReturnType<typeof createServer>,
-): Promise<string> => {
+const createMeetingRoom = async (app: Express): Promise<string> => {
   const response = await request(app)
     .post("/meeting-rooms")
     .send(createMeetingRoomRequestBody)
@@ -36,7 +42,7 @@ const createMeetingRoom = async (
 };
 
 const createReservation = async (
-  app: ReturnType<typeof createServer>,
+  app: Express,
   overrides: Partial<typeof createReservationRequestBody> & {
     resourceId?: string;
   } = {},
@@ -55,9 +61,53 @@ const createReservation = async (
 };
 
 describe("Reservation API", () => {
+  let app: Express;
+  let client: PrismaClient;
+  let cleanupDatabase: () => Promise<void>;
+
+  beforeAll(async () => {
+    const testDatabase = await createPrismaTestDatabase();
+    client = testDatabase.client;
+    cleanupDatabase = testDatabase.cleanup;
+
+    const meetingRoomRepository = new PrismaMeetingRoomRepository(client);
+    const equipmentRepository = new PrismaEquipmentRepository(client);
+    const reservationRepository = new PrismaReservationRepository(client);
+    const idGenerator = new UuidGenerator();
+    const clock = new SystemClock();
+
+    app = express();
+    app.use(express.json());
+    app.use(
+      createMeetingRoomRoutes({
+        meetingRoomRepository,
+        idGenerator,
+        clock,
+      }),
+    );
+    app.use(
+      createReservationRoutes({
+        reservationRepository,
+        meetingRoomRepository,
+        equipmentRepository,
+        idGenerator,
+        clock,
+      }),
+    );
+  });
+
+  beforeEach(async () => {
+    await client.reservation.deleteMany();
+    await client.meetingRoom.deleteMany();
+    await client.equipment.deleteMany();
+  });
+
+  afterAll(async () => {
+    await cleanupDatabase();
+  });
+
   describe("POST /reservations", () => {
     it("[正常系] request body が正しい場合、予約を作成して 201 を返す", async () => {
-      const app = createServer();
       const resourceId = await createMeetingRoom(app);
 
       const response = await request(app)
@@ -84,8 +134,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] request body の必須項目が不足している場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/reservations")
         .send({
@@ -104,8 +152,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] resourceType が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/reservations")
         .send({
@@ -126,8 +172,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] startAt が日時として不正な場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/reservations")
         .send({
@@ -148,7 +192,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] startAt が endAt より後の場合、400 を返す", async () => {
-      const app = createServer();
       const resourceId = await createMeetingRoom(app);
 
       const response = await request(app)
@@ -167,8 +210,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] 指定したリソースが存在しない場合、404 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .post("/reservations")
         .send({
@@ -183,7 +224,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] 既存予約と時間帯が重複する場合、409 を返す", async () => {
-      const app = createServer();
       const resourceId = await createMeetingRoom(app);
 
       await request(app)
@@ -254,7 +294,6 @@ describe("Reservation API", () => {
 
   describe("GET /reservations", () => {
     it("[正常系] query parameter が正しい場合、条件に一致する予約一覧を 200 で返す", async () => {
-      const app = createServer();
       const resourceId = await createMeetingRoom(app);
 
       await createReservation(app, {
@@ -290,8 +329,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] resourceType が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/reservations")
         .query({ resourceType: "INVALID_RESOURCE" })
@@ -308,8 +345,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] status が許可された値でない場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/reservations")
         .query({ status: "INVALID_STATUS" })
@@ -326,8 +361,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] from が日時として不正な場合、400 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/reservations")
         .query({ from: "invalid-date" })
@@ -346,7 +379,6 @@ describe("Reservation API", () => {
 
   describe("GET /reservations/:reservationId", () => {
     it("[正常系] 予約が存在する場合、予約詳細を 200 で返す", async () => {
-      const app = createServer();
       const reservation = await createReservation(app);
 
       const response = await request(app)
@@ -364,8 +396,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] 予約が存在しない場合、404 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .get("/reservations/missing_reservation")
         .expect(404);
@@ -378,7 +408,6 @@ describe("Reservation API", () => {
 
   describe("PATCH /reservations/:reservationId/cancel", () => {
     it("[正常系] request body が正しい場合、予約をキャンセルして 200 を返す", async () => {
-      const app = createServer();
       const reservation = await createReservation(app);
 
       const response = await request(app)
@@ -394,7 +423,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] request body の userId が不足している場合、400 を返す", async () => {
-      const app = createServer();
       const reservation = await createReservation(app);
 
       const response = await request(app)
@@ -413,8 +441,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] 予約が存在しない場合、404 を返す", async () => {
-      const app = createServer();
-
       const response = await request(app)
         .patch("/reservations/missing_reservation/cancel")
         .send({ userId: "user_001" })
@@ -426,7 +452,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] 予約者本人でない場合、403 を返す", async () => {
-      const app = createServer();
       const reservation = await createReservation(app);
 
       const response = await request(app)
@@ -440,7 +465,6 @@ describe("Reservation API", () => {
     });
 
     it("[異常系] 予約がすでにキャンセル済みの場合、409 を返す", async () => {
-      const app = createServer();
       const reservation = await createReservation(app);
 
       await request(app)
