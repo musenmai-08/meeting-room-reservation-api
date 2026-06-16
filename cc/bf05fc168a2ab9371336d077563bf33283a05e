@@ -1,0 +1,33 @@
+tests/infrastructure/prisma/repositories/PrismaMeetingRoomRepository.test.ts
+  h_ae5b095b1dd8a4 5,38,43
+  s_149403cdd19328::t_15e881062eaa0b 6,29,32-34,45
+  s_149403cdd19328::t_110c8465015b2f 1-4,7-28,30-31,35-37,39-42,44,46-170
+tests/infrastructure/prisma/prismaTestDatabase.ts
+  s_149403cdd19328::t_11bcb4442258a7 1-13,15-34,36,38,40-55
+  h_ae5b095b1dd8a4 14,35,37,39
+tests/infrastructure/prisma/repositories/PrismaEquipmentRepository.test.ts
+  s_149403cdd19328::t_794d253f07faa3 1-167
+tests/infrastructure/prisma/repositories/PrismaReservationRepository.test.ts
+  s_149403cdd19328::t_864d427327f41a 1-297
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "ccbf05fc168a2ab9371336d077563bf33283a05e",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
