@@ -127,9 +127,16 @@ npm run build
 
 API 層のテスト観点は [API test cases](./docs/testing/api.md) を参照してください。
 
+## 追加機能仕様
+
+- [リソース利用停止枠機能](./docs/features/resource-unavailable-periods.md)
+
+追加機能の詳細仕様は、機能ごとのドキュメントに分けて管理します。
+
 ## ドキュメント
 
 - [要求仕様](./docs/requirements.md)
+- [リソース利用停止枠機能](./docs/features/resource-unavailable-periods.md)
 - [クリーンアーキテクチャ概要](./docs/architecture/clean-architecture/README.md)
 - [依存方向のルール](./docs/architecture/clean-architecture/dependency-rule.md)
 - [ディレクトリ構成](./docs/architecture/clean-architecture/directory-structure.md)
