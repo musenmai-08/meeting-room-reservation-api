@@ -1,0 +1,47 @@
+docs/architecture/clean-architecture/layers/entity.md
+  s_149403cdd19328::t_f560ecd05b8047 209-225
+  s_149403cdd19328::t_749cd68446500f 72-73,177,179-180,182
+docs/requirements.md
+  s_149403cdd19328::t_d5b541ac91e9a7 647-665
+  s_149403cdd19328::t_f9f4413fd7a147 357-358,423-424,637
+  s_149403cdd19328::t_41a3f8b1d341b0 734-750,785-798,827-838,867-881
+  s_149403cdd19328::t_389a498d7d92d3 494-496,532-533,559-561,587
+  s_149403cdd19328::t_48162ed810f6da 69-71
+  s_149403cdd19328::t_157be5ee36c2e8 890-975
+docs/testing/api.md
+  s_149403cdd19328::t_57adf25f4cfd0c 5,15,17,23-25,29,34,36,39,46,49
+docs/architecture/clean-architecture/layers/infrastructure.md
+  s_149403cdd19328::t_9e194036256927 44-46
+  s_149403cdd19328::t_120c7a9389cc3f 32-33,38-43,47
+docs/testing/usecase.md
+  s_149403cdd19328::t_83eefc5106a904 7
+docs/architecture/clean-architecture/infrastructure/prisma-repository.md
+  s_149403cdd19328::t_b673a97b0bb730 3,24,43,105-111,141-142,226-239
+  s_149403cdd19328::t_853cd59bf7be72 28-36
+docs/testing/repository.md
+  s_149403cdd19328::t_ac48df2b2afb7a 5,31,80-92
+docs/architecture/clean-architecture/directory-structure.md
+  s_149403cdd19328::t_c793db92558ca3 3
+  s_149403cdd19328::t_bcfdb502deda97 7-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "a3a6344bf2eead067550efbae5217b7b570ad8d8",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
