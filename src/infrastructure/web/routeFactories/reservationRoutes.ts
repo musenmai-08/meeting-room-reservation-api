@@ -10,11 +10,13 @@ import { CreateReservationUseCase } from "@application/usecases/reservations/Cre
 import { GetReservationUseCase } from "@application/usecases/reservations/GetReservationUseCase";
 import { ListReservationsUseCase } from "@application/usecases/reservations/ListReservationsUseCase";
 import { ReservationController } from "@interface/controllers/ReservationController";
+import { ResourceUnavailablePeriodRepository } from "@application/repositories/ResourceUnavailablePeriodRepository";
 
 type CreateReservationRoutesDependencies = {
   reservationRepository: ReservationRepository;
   meetingRoomRepository: MeetingRoomRepository;
   equipmentRepository: EquipmentRepository;
+  resourceUnavailablePeriodRepository: ResourceUnavailablePeriodRepository;
   idGenerator: IdGenerator;
   clock: Clock;
 };
@@ -28,6 +30,7 @@ export function createReservationRoutes(
       dependencies.reservationRepository,
       dependencies.meetingRoomRepository,
       dependencies.equipmentRepository,
+      dependencies.resourceUnavailablePeriodRepository,
       dependencies.idGenerator,
       dependencies.clock,
     ),

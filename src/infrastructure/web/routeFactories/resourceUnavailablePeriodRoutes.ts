@@ -20,7 +20,7 @@ type CreateResourceUnavailablePeriodRoutes = {
   clock: Clock;
 };
 
-export function resourceUnavailablePeriodRoutes(
+export function createResourceUnavailablePeriodRoutes(
   dependencies: CreateResourceUnavailablePeriodRoutes,
 ): Router {
   const router = Router();
