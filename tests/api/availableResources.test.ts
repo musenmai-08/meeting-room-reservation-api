@@ -6,6 +6,7 @@ import { type SearchAvailableResourcesUseCase } from "@application/usecases/reso
 import { PrismaEquipmentRepository } from "@infrastructure/prisma/repositories/PrismaEquipmentRepository";
 import { PrismaMeetingRoomRepository } from "@infrastructure/prisma/repositories/PrismaMeetingRoomRepository";
 import { PrismaReservationRepository } from "@infrastructure/prisma/repositories/PrismaReservationRepository";
+import { PrismaResourceUnavailablePeriodRepository } from "@infrastructure/prisma/repositories/PrismaResourceUnavailablePeriodRepository";
 import { SystemClock } from "@infrastructure/services/SystemClock";
 import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
 import { createAvailableResourceRoutes } from "@infrastructure/web/routeFactories/availableResourceRoutes";
@@ -102,6 +103,8 @@ describe("AvailableResource API", () => {
     const meetingRoomRepository = new PrismaMeetingRoomRepository(client);
     const equipmentRepository = new PrismaEquipmentRepository(client);
     const reservationRepository = new PrismaReservationRepository(client);
+    const resourceUnavailablePeriodRepository =
+      new PrismaResourceUnavailablePeriodRepository(client);
     const idGenerator = new UuidGenerator();
     const clock = new SystemClock();
 
@@ -126,6 +129,7 @@ describe("AvailableResource API", () => {
         reservationRepository,
         meetingRoomRepository,
         equipmentRepository,
+        resourceUnavailablePeriodRepository,
         idGenerator,
         clock,
       }),
@@ -140,6 +144,7 @@ describe("AvailableResource API", () => {
   });
 
   beforeEach(async () => {
+    await client.resourceUnavailablePeriod.deleteMany();
     await client.reservation.deleteMany();
     await client.meetingRoom.deleteMany();
     await client.equipment.deleteMany();

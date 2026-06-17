@@ -18,6 +18,7 @@ import { ResourceType } from "@domain/valueObjects/ResourceType";
 import { InMemoryEquipmentRepository } from "@infrastructure/_repositories/InMemoryEquipmentRepository";
 import { InMemoryMeetingRoomRepository } from "@infrastructure/_repositories/InMemoryMeetingRoomRepository";
 import { InMemoryReservationRepository } from "@infrastructure/_repositories/InMemoryReservationRepository";
+import { InMemoryResourceUnavailablePeriodRepository } from "@infrastructure/_repositories/InMemoryResourceUnavailablePeriodRepository";
 
 class FixedIdGenerator implements IdGenerator {
   public constructor(private readonly id: string) {}
@@ -83,10 +84,13 @@ const createUseCase = (options: { id?: string; now?: Date } = {}) => {
   const reservationRepository = new InMemoryReservationRepository();
   const meetingRoomRepository = new InMemoryMeetingRoomRepository();
   const equipmentRepository = new InMemoryEquipmentRepository();
+  const resourceUnavailablePeriodRepository =
+    new InMemoryResourceUnavailablePeriodRepository();
   const useCase = new CreateReservationUseCase(
     reservationRepository,
     meetingRoomRepository,
     equipmentRepository,
+    resourceUnavailablePeriodRepository,
     new FixedIdGenerator(options.id ?? "res_001"),
     new FixedClock(options.now ?? date("2026-06-10T10:00:00+09:00")),
   );
@@ -96,6 +100,7 @@ const createUseCase = (options: { id?: string; now?: Date } = {}) => {
     reservationRepository,
     meetingRoomRepository,
     equipmentRepository,
+    resourceUnavailablePeriodRepository,
   };
 };
 
