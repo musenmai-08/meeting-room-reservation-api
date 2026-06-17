@@ -1,0 +1,24 @@
+src/infrastructure/web/routeFactories/resourceUnavailablePeriodRoutes.ts
+  h_ae5b095b1dd8a4 23
+src/domain/services/ReservationConflictService.ts
+  h_ae5b095b1dd8a4 1,17-25
+src/infrastructure/web/routes.ts
+  h_ae5b095b1dd8a4 7,13,21-22,45,57-64
+src/application/usecases/reservations/CreateReservationUseCase.ts
+  h_ae5b095b1dd8a4 9,46,74-89
+src/infrastructure/web/routeFactories/reservationRoutes.ts
+  h_ae5b095b1dd8a4 13,19,33
+src/domain/valueObjects/UnavailablePeriod.ts
+  h_ae5b095b1dd8a4 39,42-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "13b8fca6a1084067ece1ba184d9a705919b9de00",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
