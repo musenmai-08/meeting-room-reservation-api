@@ -1,0 +1,14 @@
+src/infrastructure/web/routeFactories/resourceUnavailablePeriodRoutes.ts
+  h_ae5b095b1dd8a4 61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "cd540283e004e3edfd54854a01516a1da00cfba2",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
