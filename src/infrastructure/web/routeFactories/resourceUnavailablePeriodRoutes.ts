@@ -58,7 +58,7 @@ export function createResourceUnavailablePeriodRoutes(
     "/resource-unavailable-periods/:resourceUnavailablePeriodId",
     resourceUnavailablePeriodController.get,
   );
-  router.post(
+  router.patch(
     "/resource-unavailable-periods/:resourceUnavailablePeriodId/cancel",
     resourceUnavailablePeriodController.cancel,
   );
