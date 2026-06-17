@@ -1,0 +1,78 @@
+src/domain/services/ResourceUnavailablePeriodConflictService.ts
+  h_ae5b095b1dd8a4 1-28
+src/application/errors/ResourceUnavailablePeriodError.ts
+  h_ae5b095b1dd8a4 1-37
+src/infrastructure/web/routeFactories/resourceUnavailablePeriodRoutes.ts
+  h_ae5b095b1dd8a4 1-67
+src/infrastructure/prisma/repositories/PrismaResourceUnavailablePeriodRepository.ts
+  h_ae5b095b1dd8a4 1-113
+src/interface/controllers/ResourceUnavailablePeriodController.ts
+  s_149403cdd19328::t_45519a3676a81f 2,13-14,25-60
+  s_149403cdd19328::t_925004998fccea 4-9,11-12,16-17,161-168,172-184
+  h_ae5b095b1dd8a4 1,3,10,15,18-24,61-160,169-171,185-188
+src/domain/valueObjects/ReservationPeriod.ts
+  h_ae5b095b1dd8a4 46-48,51-52
+tests/application/usecases/meetingRooms/CreateMeetingRoomUseCase.test.ts
+  h_ae5b095b1dd8a4 7
+tests/application/usecases/resources/SearchAvailableResourcesUseCase.test.ts
+  h_ae5b095b1dd8a4 11-13,113
+src/application/usecases/resourceUnavailablePeriods/GetResourceUnavailablePeriodUseCase.ts
+  h_ae5b095b1dd8a4 1-53
+tests/application/usecases/reservations/GetReservationUseCase.test.ts
+  h_ae5b095b1dd8a4 9
+docs/features/resource-unavailable-periods.md
+  s_149403cdd19328::t_180bd5aa19453e 40,274
+  h_ae5b095b1dd8a4 35,82,160,257
+tests/application/usecases/equipments/ListEquipmentsUseCase.test.ts
+  h_ae5b095b1dd8a4 6
+src/domain/entities/ResourceUnavailablePeriod.ts
+  s_149403cdd19328::t_3f2721a26d7036 17,47-48,116-117
+  h_ae5b095b1dd8a4 1-16,18-46,49-115,118-186
+src/domain/valueObjects/ResourceUnavailablePeriodStatus.ts
+  h_ae5b095b1dd8a4 1-28
+tests/application/usecases/reservations/CancelReservationUseCase.test.ts
+  h_ae5b095b1dd8a4 14
+src/domain/valueObjects/UnavailablePeriod.ts
+  h_ae5b095b1dd8a4 1-62
+tests/application/usecases/meetingRooms/ListMeetingRoomsUseCase.test.ts
+  h_ae5b095b1dd8a4 5,29,32
+src/infrastructure/prisma/mappers/ResourceUnavailablePeriodPrismaMapper.ts
+  h_ae5b095b1dd8a4 1-45
+tests/application/usecases/reservations/CreateReservationUseCase.test.ts
+  h_ae5b095b1dd8a4 18-20
+src/interface/presenters/ResourceUnavailablePeriodPresenter.ts
+  h_ae5b095b1dd8a4 1-93
+src/application/repositories/ResourceUnavailablePeriodRepository.ts
+  h_ae5b095b1dd8a4 1-27
+tests/application/usecases/reservations/ListReservationsUseCase.test.ts
+  h_ae5b095b1dd8a4 8,47,50,73,83,86,109
+tests/application/usecases/equipments/CreateEquipmentUseCase.test.ts
+  h_ae5b095b1dd8a4 8
+src/domain/errors/ResourceUnavailablePeriodErrors.ts
+  h_ae5b095b1dd8a4 1-34
+prisma/schema.prisma
+  h_ae5b095b1dd8a4 51-68
+src/application/usecases/resourceUnavailablePeriods/ListResourceUnavailablePeriodsUseCase.ts
+  h_ae5b095b1dd8a4 1-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "a7258ffd8e80d6e28ef31eb5d0246adee88732ba",
+  "prompts": {},
+  "humans": {
+    "h_ae5b095b1dd8a4": {
+      "author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
