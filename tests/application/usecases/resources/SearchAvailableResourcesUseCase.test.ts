@@ -8,9 +8,9 @@ import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
 import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
 import { ReservationStatus } from "@domain/valueObjects/ReservationStatus";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
-import { InMemoryEquipmentRepository } from "@infrastructure/repositories/InMemoryEquipmentRepository";
-import { InMemoryMeetingRoomRepository } from "@infrastructure/repositories/InMemoryMeetingRoomRepository";
-import { InMemoryReservationRepository } from "@infrastructure/repositories/InMemoryReservationRepository";
+import { InMemoryEquipmentRepository } from "@infrastructure/_repositories/InMemoryEquipmentRepository";
+import { InMemoryMeetingRoomRepository } from "@infrastructure/_repositories/InMemoryMeetingRoomRepository";
+import { InMemoryReservationRepository } from "@infrastructure/_repositories/InMemoryReservationRepository";
 
 const date = (isoString: string): Date => new Date(isoString);
 
@@ -109,7 +109,9 @@ describe("SearchAvailableResourcesUseCase", () => {
     await meetingRoomRepository.save(
       createMeetingRoom({ id: "mr_002", name: "会議室B" }),
     );
-    await reservationRepository.save(createReservation({ resourceId: "mr_001" }));
+    await reservationRepository.save(
+      createReservation({ resourceId: "mr_001" }),
+    );
 
     const output = await useCase.execute({
       resourceType: ResourceType.MeetingRoom,
@@ -213,4 +215,3 @@ describe("SearchAvailableResourcesUseCase", () => {
     expect(output.items).toHaveLength(1);
   });
 });
-

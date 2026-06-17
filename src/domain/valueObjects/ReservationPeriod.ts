@@ -43,11 +43,13 @@ export class ReservationPeriod {
   }
 
   // 既存予約と新規予約が重なっているかを見る
-  public overlaps(other: ReservationPeriod): boolean {
+  // reservation と UnvaliablePeriod の period 重複の検証でも使うので、other の型を緩くしている
+  // UnvaliablePeriod との検証がないなら other の型 はReservationPeriod で良い
+  public overlaps(other: { startAt: Date; endAt: Date }): boolean {
     // 片方の開始がもう片方の終了より前なら、時間帯が重なっています。
     return (
-      this.startAtValue.getTime() < other.endAtValue.getTime() &&
-      other.startAtValue.getTime() < this.endAtValue.getTime()
+      this.startAtValue.getTime() < other.endAt.getTime() &&
+      other.startAt.getTime() < this.endAtValue.getTime()
     );
   }
 

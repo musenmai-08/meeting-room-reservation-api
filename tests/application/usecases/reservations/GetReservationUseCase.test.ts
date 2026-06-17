@@ -6,7 +6,7 @@ import { Reservation } from "@domain/entities/Reservation";
 import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
 import { ReservationStatus } from "@domain/valueObjects/ReservationStatus";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
-import { InMemoryReservationRepository } from "@infrastructure/repositories/InMemoryReservationRepository";
+import { InMemoryReservationRepository } from "@infrastructure/_repositories/InMemoryReservationRepository";
 
 const date = (isoString: string): Date => new Date(isoString);
 
@@ -71,4 +71,3 @@ describe("GetReservationUseCase", () => {
     });
   });
 });
-

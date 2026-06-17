@@ -15,9 +15,9 @@ import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
 import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
 import { ReservationStatus } from "@domain/valueObjects/ReservationStatus";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
-import { InMemoryEquipmentRepository } from "@infrastructure/repositories/InMemoryEquipmentRepository";
-import { InMemoryMeetingRoomRepository } from "@infrastructure/repositories/InMemoryMeetingRoomRepository";
-import { InMemoryReservationRepository } from "@infrastructure/repositories/InMemoryReservationRepository";
+import { InMemoryEquipmentRepository } from "@infrastructure/_repositories/InMemoryEquipmentRepository";
+import { InMemoryMeetingRoomRepository } from "@infrastructure/_repositories/InMemoryMeetingRoomRepository";
+import { InMemoryReservationRepository } from "@infrastructure/_repositories/InMemoryReservationRepository";
 
 class FixedIdGenerator implements IdGenerator {
   public constructor(private readonly id: string) {}
@@ -225,4 +225,3 @@ describe("CreateReservationUseCase", () => {
     expect(output.id).toBe("res_001");
   });
 });
-

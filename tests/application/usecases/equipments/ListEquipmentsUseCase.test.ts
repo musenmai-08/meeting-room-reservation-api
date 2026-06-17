@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ListEquipmentsUseCase } from "@application/usecases/equipments/ListEquipmentsUseCase";
 import { Equipment } from "@domain/entities/Equipment";
 import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
-import { InMemoryEquipmentRepository } from "@infrastructure/repositories/InMemoryEquipmentRepository";
+import { InMemoryEquipmentRepository } from "@infrastructure/_repositories/InMemoryEquipmentRepository";
 
 type EquipmentFactoryProps = Parameters<typeof Equipment.create>[0];
 
@@ -106,4 +106,3 @@ describe("ListEquipmentsUseCase", () => {
     });
   });
 });
-
