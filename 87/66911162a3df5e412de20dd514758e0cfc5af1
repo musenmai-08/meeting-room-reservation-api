@@ -1,0 +1,27 @@
+prisma/migrations/20260615065245_init/migration.sql
+  s_149403cdd19328::t_b0e95a3476b4b5 38-52,64-72
+tests/application/usecases/reservations/CreateReservationUseCase.test.ts
+  s_149403cdd19328::t_dc762a28bce5ae 21,87-88,93,103
+tests/api/availableResources.test.ts
+  s_149403cdd19328::t_9579cb1527d1a6 9,106-107,132,147
+src/infrastructure/_repositories/InMemoryResourceUnavailablePeriodRepository.ts
+  s_149403cdd19328::t_c743c3d9e3c35f 1-91
+tests/api/reservations.test.ts
+  s_149403cdd19328::t_c0eb6d46de21bd 12,77-78,96,104
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "8766911162a3df5e412de20dd514758e0cfc5af1",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
