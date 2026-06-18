@@ -4,7 +4,7 @@ import { MeetingRoomAlreadyExistsError } from "@application/errors/MeetingRoomAp
 import { type Clock } from "@application/services/Clock";
 import { type IdGenerator } from "@application/services/IdGenerator";
 import { CreateMeetingRoomUseCase } from "@application/usecases/meetingRooms/CreateMeetingRoomUseCase";
-import { InMemoryMeetingRoomRepository } from "@infrastructure/repositories/InMemoryMeetingRoomRepository";
+import { InMemoryMeetingRoomRepository } from "@infrastructure/_repositories/InMemoryMeetingRoomRepository";
 
 class FixedIdGenerator implements IdGenerator {
   public constructor(private readonly id: string) {}
@@ -128,4 +128,3 @@ describe("CreateMeetingRoomUseCase", () => {
     expect(savedMeetingRoom?.capacity).toBe(8);
   });
 });
-

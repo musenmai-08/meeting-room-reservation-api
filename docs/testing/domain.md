@@ -104,3 +104,44 @@ tests/domain/valueObjects/EquipmentCategory.test.ts
 - 定義済みカテゴリを parse できる
 - 定義外の値はエラー
 
+## UnavailablePeriod
+
+確認すること:
+
+- 開始日時が終了日時より前なら生成できる
+- 開始日時と終了日時が同じならエラー
+- 開始日時が終了日時より後ならエラー
+- 一部だけ重なる時間帯は重複する
+- 終了時刻と開始時刻が一致する場合は重複しない
+
+## ResourceUnavailablePeriodStatus
+
+確認すること:
+
+- `ACTIVE` を parse できる
+- `CANCELLED` を parse できる
+- 定義外の値はエラー
+
+## ResourceUnavailablePeriod
+
+確認すること:
+
+- 有効な値なら生成できる
+- `reason` は trim される
+- `reason` が空ならエラー
+- `reason` が 200 文字なら生成できる
+- `reason` が 201 文字ならエラー
+- `ACTIVE` なのに `cancelledAt` がある場合はエラー
+- `CANCELLED` なのに `cancelledAt` がない場合はエラー
+- 開始前の利用停止枠はキャンセルできる
+- キャンセル済み利用停止枠は再度キャンセルできない
+- 開始済み利用停止枠はキャンセルできない
+
+## ResourceUnavailablePeriodConflictService
+
+確認すること:
+
+- 有効な利用停止枠と新規利用停止期間が重なる場合は conflict になる
+- キャンセル済み利用停止枠は conflict 判定から除外される
+- 有効予約と新規利用停止期間が重なる場合は conflict になる
+- キャンセル済み予約は conflict 判定から除外される

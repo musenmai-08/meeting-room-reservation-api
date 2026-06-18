@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { ListMeetingRoomsUseCase } from "@application/usecases/meetingRooms/ListMeetingRoomsUseCase";
 import { MeetingRoom } from "@domain/entities/MeetingRoom";
-import { InMemoryMeetingRoomRepository } from "@infrastructure/repositories/InMemoryMeetingRoomRepository";
+import { InMemoryMeetingRoomRepository } from "@infrastructure/_repositories/InMemoryMeetingRoomRepository";
 
 type MeetingRoomFactoryProps = Parameters<typeof MeetingRoom.create>[0];
 
@@ -25,8 +25,12 @@ const createTestMeetingRoom = (
 describe("ListMeetingRoomsUseCase", () => {
   it("[正常系] 会議室一覧を取得できる", async () => {
     const repository = new InMemoryMeetingRoomRepository();
-    await repository.save(createTestMeetingRoom({ id: "mr_001", name: "会議室A" }));
-    await repository.save(createTestMeetingRoom({ id: "mr_002", name: "会議室B" }));
+    await repository.save(
+      createTestMeetingRoom({ id: "mr_001", name: "会議室A" }),
+    );
+    await repository.save(
+      createTestMeetingRoom({ id: "mr_002", name: "会議室B" }),
+    );
     const useCase = new ListMeetingRoomsUseCase(repository);
 
     const output = await useCase.execute();
@@ -95,4 +99,3 @@ describe("ListMeetingRoomsUseCase", () => {
     });
   });
 });
-

@@ -9,6 +9,7 @@ import { type ListReservationsUseCase } from "@application/usecases/reservations
 import { PrismaEquipmentRepository } from "@infrastructure/prisma/repositories/PrismaEquipmentRepository";
 import { PrismaMeetingRoomRepository } from "@infrastructure/prisma/repositories/PrismaMeetingRoomRepository";
 import { PrismaReservationRepository } from "@infrastructure/prisma/repositories/PrismaReservationRepository";
+import { PrismaResourceUnavailablePeriodRepository } from "@infrastructure/prisma/repositories/PrismaResourceUnavailablePeriodRepository";
 import { SystemClock } from "@infrastructure/services/SystemClock";
 import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
 import { createMeetingRoomRoutes } from "@infrastructure/web/routeFactories/meetingRoomRoutes";
@@ -73,6 +74,8 @@ describe("Reservation API", () => {
     const meetingRoomRepository = new PrismaMeetingRoomRepository(client);
     const equipmentRepository = new PrismaEquipmentRepository(client);
     const reservationRepository = new PrismaReservationRepository(client);
+    const resourceUnavailablePeriodRepository =
+      new PrismaResourceUnavailablePeriodRepository(client);
     const idGenerator = new UuidGenerator();
     const clock = new SystemClock();
 
@@ -90,6 +93,7 @@ describe("Reservation API", () => {
         reservationRepository,
         meetingRoomRepository,
         equipmentRepository,
+        resourceUnavailablePeriodRepository,
         idGenerator,
         clock,
       }),
@@ -97,6 +101,7 @@ describe("Reservation API", () => {
   });
 
   beforeEach(async () => {
+    await client.resourceUnavailablePeriod.deleteMany();
     await client.reservation.deleteMany();
     await client.meetingRoom.deleteMany();
     await client.equipment.deleteMany();
@@ -233,6 +238,39 @@ describe("Reservation API", () => {
           resourceId,
         })
         .expect(201);
+
+      const response = await request(app)
+        .post("/reservations")
+        .send({
+          ...createReservationRequestBody,
+          resourceId,
+          startAt: "2030-06-11T10:30:00+09:00",
+          endAt: "2030-06-11T11:30:00+09:00",
+        })
+        .expect(409);
+
+      expect(response.body.error).toMatchObject({
+        code: "RESERVATION_CONFLICT",
+      });
+    });
+
+    it("[異常系] 有効な利用停止枠と時間帯が重複する場合、409 を返す", async () => {
+      const resourceId = await createMeetingRoom(app);
+      await client.resourceUnavailablePeriod.create({
+        data: {
+          id: "rup_001",
+          resourceType: "MEETING_ROOM",
+          resourceId,
+          operatorId: "operator_001",
+          startAt: new Date("2030-06-11T10:00:00+09:00"),
+          endAt: new Date("2030-06-11T11:00:00+09:00"),
+          reason: "メンテナンス",
+          status: "ACTIVE",
+          cancelledAt: null,
+          createdAt: new Date("2030-06-10T10:00:00+09:00"),
+          updatedAt: new Date("2030-06-10T10:00:00+09:00"),
+        },
+      });
 
       const response = await request(app)
         .post("/reservations")

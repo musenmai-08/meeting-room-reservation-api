@@ -5,7 +5,7 @@ import { Reservation } from "@domain/entities/Reservation";
 import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
 import { ReservationStatus } from "@domain/valueObjects/ReservationStatus";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
-import { InMemoryReservationRepository } from "@infrastructure/repositories/InMemoryReservationRepository";
+import { InMemoryReservationRepository } from "@infrastructure/_repositories/InMemoryReservationRepository";
 
 const date = (isoString: string): Date => new Date(isoString);
 
@@ -43,8 +43,12 @@ describe("ListReservationsUseCase", () => {
 
   it("[正常系] userId で絞り込める", async () => {
     const repository = new InMemoryReservationRepository();
-    await repository.save(createReservation({ id: "res_001", userId: "user_001" }));
-    await repository.save(createReservation({ id: "res_002", userId: "user_002" }));
+    await repository.save(
+      createReservation({ id: "res_001", userId: "user_001" }),
+    );
+    await repository.save(
+      createReservation({ id: "res_002", userId: "user_002" }),
+    );
     const useCase = new ListReservationsUseCase(repository);
 
     const output = await useCase.execute({ userId: "user_002" });
@@ -65,7 +69,9 @@ describe("ListReservationsUseCase", () => {
     );
     const useCase = new ListReservationsUseCase(repository);
 
-    const output = await useCase.execute({ resourceType: ResourceType.Equipment });
+    const output = await useCase.execute({
+      resourceType: ResourceType.Equipment,
+    });
 
     expect(output.items).toHaveLength(1);
     expect(output.items[0]?.id).toBe("res_002");
@@ -73,8 +79,12 @@ describe("ListReservationsUseCase", () => {
 
   it("[正常系] resourceId で絞り込める", async () => {
     const repository = new InMemoryReservationRepository();
-    await repository.save(createReservation({ id: "res_001", resourceId: "mr_001" }));
-    await repository.save(createReservation({ id: "res_002", resourceId: "mr_002" }));
+    await repository.save(
+      createReservation({ id: "res_001", resourceId: "mr_001" }),
+    );
+    await repository.save(
+      createReservation({ id: "res_002", resourceId: "mr_002" }),
+    );
     const useCase = new ListReservationsUseCase(repository);
 
     const output = await useCase.execute({ resourceId: "mr_002" });
@@ -95,7 +105,9 @@ describe("ListReservationsUseCase", () => {
     );
     const useCase = new ListReservationsUseCase(repository);
 
-    const output = await useCase.execute({ status: ReservationStatus.Cancelled });
+    const output = await useCase.execute({
+      status: ReservationStatus.Cancelled,
+    });
 
     expect(output.items).toHaveLength(1);
     expect(output.items[0]?.id).toBe("res_002");
@@ -156,4 +168,3 @@ describe("ListReservationsUseCase", () => {
     });
   });
 });
-

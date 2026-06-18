@@ -31,13 +31,13 @@
 
 ## 用語
 
-| 用語 | 説明 |
-| ---- | ---- |
-| リソース | 予約対象となる会議室または備品 |
-| 利用停止枠 | 指定した時間帯にリソースを予約不可にする枠 |
-| 有効な利用停止枠 | `ACTIVE` 状態の利用停止枠 |
-| キャンセル済み利用停止枠 | `CANCELLED` 状態の利用停止枠。予約作成や空き検索では無視する |
-| 操作者 | 利用停止枠を登録・キャンセルする人。認証は行わず `operatorId` として受け取る |
+| 用語                     | 説明                                                                     |
+| ------------------------ | ------------------------------------------------------------------------ |
+| リソース                 | 予約対象となる会議室または備品                                           |
+| 利用停止枠               | 指定した時間帯にリソースを予約不可にする枠                               |
+| 有効な利用停止枠         | `ACTIVE` 状態の利用停止枠                                                |
+| キャンセル済み利用停止枠 | `CANCELLED` 状態の利用停止枠。予約作成や空き検索では無視する             |
+| 操作者                   | 利用停止枠を登録・キャンセルする人。認証は行わず `operatorId` として受け取る |
 
 ## 前提条件
 
@@ -78,13 +78,13 @@
 
 この判定は、利用停止枠と予約、利用停止枠同士の両方で使います。
 
-| 既存枠 | 新規枠 | 判定 |
-| ------ | ------ | ---- |
+| 既存枠        | 新規枠        | 判定       |
+| ------------- | ------------- | ---------- |
 | 10:00 - 11:00 | 09:00 - 10:00 | 重複しない |
 | 10:00 - 11:00 | 11:00 - 12:00 | 重複しない |
-| 10:00 - 11:00 | 10:30 - 11:30 | 重複する |
-| 10:00 - 11:00 | 09:30 - 10:30 | 重複する |
-| 10:00 - 11:00 | 10:00 - 11:00 | 重複する |
+| 10:00 - 11:00 | 10:30 - 11:30 | 重複する   |
+| 10:00 - 11:00 | 09:30 - 10:30 | 重複する   |
+| 10:00 - 11:00 | 10:00 - 11:00 | 重複する   |
 
 ### 予約作成への追加ルール
 
@@ -156,13 +156,13 @@ GET /resource-unavailable-periods
 
 #### Query Parameters
 
-| 項目 | 型 | 必須 | 説明 |
-| ---- | -- | ---- | ---- |
-| resourceType | string | 任意 | `MEETING_ROOM` または `EQUIPMENT` |
-| resourceId | string | 任意 | 対象リソース ID |
-| status | string | 任意 | `ACTIVE` または `CANCELLED` |
-| from | string | 任意 | 指定日時以降に関係する利用停止枠を取得 |
-| to | string | 任意 | 指定日時以前に関係する利用停止枠を取得 |
+| 項目         | 型     | 必須 | 説明                                   |
+| ------------ | ------ | ---- | -------------------------------------- |
+| resourceType | string | 任意 | `MEETING_ROOM` または `EQUIPMENT`      |
+| resourceId   | string | 任意 | 対象リソース ID                        |
+| status       | string | 任意 | `ACTIVE` または `CANCELLED`            |
+| from         | string | 任意 | 指定日時以降に関係する利用停止枠を取得 |
+| to           | string | 任意 | 指定日時以前に関係する利用停止枠を取得 |
 
 #### Response: 200 OK
 
@@ -253,16 +253,16 @@ PATCH /resource-unavailable-periods/:resourceUnavailablePeriodId/cancel
 
 ## エラーコード
 
-| HTTP Status | code | 説明 |
-| ----------- | ---- | ---- |
-| 400 | `INVALID_RESOURCE_UNAVAILABLE_PERIOD` | 利用停止枠の期間が不正 |
-| 400 | `INVALID_RESOURCE_UNAVAILABLE_PERIOD_STATUS` | 利用停止枠ステータスが不正 |
-| 400 | `RESOURCE_UNAVAILABLE_PERIOD_START_AT_MUST_BE_FUTURE` | 開始日時が現在日時以前 |
-| 404 | `RESOURCE_UNAVAILABLE_PERIOD_NOT_FOUND` | 利用停止枠が存在しない |
-| 409 | `RESOURCE_UNAVAILABLE` | 予約対象リソースが利用停止中 |
-| 409 | `RESOURCE_UNAVAILABLE_PERIOD_CONFLICT` | 有効な利用停止枠と重複 |
-| 409 | `RESOURCE_HAS_ACTIVE_RESERVATION` | 有効予約と重複 |
-| 409 | `RESOURCE_UNAVAILABLE_PERIOD_ALREADY_CANCELLED` | 利用停止枠がすでにキャンセル済み |
+| HTTP Status | code                                                  | 説明                             |
+| ----------- | ----------------------------------------------------- | -------------------------------- |
+| 400         | `INVALID_RESOURCE_UNAVAILABLE_PERIOD`                 | 利用停止枠の期間が不正           |
+| 400         | `INVALID_RESOURCE_UNAVAILABLE_PERIOD_STATUS`          | 利用停止枠ステータスが不正       |
+| 400         | `RESOURCE_UNAVAILABLE_PERIOD_START_AT_MUST_BE_FUTURE` | 開始日時が現在日時以前           |
+| 404         | `RESOURCE_UNAVAILABLE_PERIOD_NOT_FOUND`               | 利用停止枠が存在しない           |
+| 409         | `RESOURCE_UNAVAILABLE`                                | 予約対象リソースが利用停止中     |
+| 409         | `RESOURCE_UNAVAILABLE_PERIOD_CONFLICT`                | 有効な利用停止枠と重複           |
+| 409         | `RESOURCE_HAS_ACTIVE_RESERVATION`                     | 有効予約と重複                   |
+| 409         | `RESOURCE_UNAVAILABLE_PERIOD_ALREADY_CANCELLED`       | 利用停止枠がすでにキャンセル済み |
 
 ## データモデル
 
@@ -271,7 +271,7 @@ model ResourceUnavailablePeriod {
   id           String    @id
   resourceType String
   resourceId   String
-  operatorId   String
+  operatorId String
   startAt      DateTime
   endAt        DateTime
   reason       String

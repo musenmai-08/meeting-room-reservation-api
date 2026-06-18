@@ -5,7 +5,7 @@ import { type Clock } from "@application/services/Clock";
 import { type IdGenerator } from "@application/services/IdGenerator";
 import { CreateEquipmentUseCase } from "@application/usecases/equipments/CreateEquipmentUseCase";
 import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
-import { InMemoryEquipmentRepository } from "@infrastructure/repositories/InMemoryEquipmentRepository";
+import { InMemoryEquipmentRepository } from "@infrastructure/_repositories/InMemoryEquipmentRepository";
 
 class FixedIdGenerator implements IdGenerator {
   public constructor(private readonly id: string) {}
@@ -129,4 +129,3 @@ describe("CreateEquipmentUseCase", () => {
     expect(savedEquipment?.category).toBe(EquipmentCategory.Projector);
   });
 });
-

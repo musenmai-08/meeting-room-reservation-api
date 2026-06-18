@@ -48,3 +48,21 @@ model Reservation {
   @@index([resourceType, resourceId])
   @@index([resourceType, startAt, endAt])
 }
+
+model ResourceUnavailablePeriod {
+  id           String    @id
+  resourceType String
+  resourceId   String
+  operatorId   String
+  startAt      DateTime
+  endAt        DateTime
+  reason       String
+  status       String
+  cancelledAt  DateTime?
+  createdAt    DateTime
+  updatedAt    DateTime
+
+  @@index([resourceType, resourceId])
+  @@index([resourceType, resourceId, status])
+  @@index([resourceType, resourceId, startAt, endAt])
+}

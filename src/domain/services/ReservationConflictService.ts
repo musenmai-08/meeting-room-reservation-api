@@ -1,3 +1,4 @@
+import { ResourceUnavailablePeriod } from "@domain/entities/ResourceUnavailablePeriod";
 import { Reservation } from "../entities/Reservation";
 import { ReservationPeriod } from "../valueObjects/ReservationPeriod";
 
@@ -11,6 +12,15 @@ export class ReservationConflictService {
     return existingReservations.some(
       (reservation) =>
         reservation.isReserved() && reservation.period.overlaps(newPeriod),
+    );
+  }
+
+  public static hasConflictWithUnavailablePeriods(
+    unavailablePeriods: ResourceUnavailablePeriod[],
+    newPeriod: ReservationPeriod,
+  ): boolean {
+    return unavailablePeriods.some(
+      (period) => period.isActive() && period.period.overlaps(newPeriod),
     );
   }
 }

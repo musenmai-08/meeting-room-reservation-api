@@ -6,6 +6,7 @@ import { ResourceNotFoundError } from "@application/errors/ResourceApplicationEr
 import { EquipmentRepository } from "@application/repositories/EquipmentRepository";
 import { MeetingRoomRepository } from "@application/repositories/MeetingRoomRepository";
 import { ReservationRepository } from "@application/repositories/ReservationRepository";
+import { ResourceUnavailablePeriodRepository } from "@application/repositories/ResourceUnavailablePeriodRepository";
 import { Clock } from "@application/services/Clock";
 import { IdGenerator } from "@application/services/IdGenerator";
 import { Reservation } from "@domain/entities/Reservation";
@@ -42,6 +43,7 @@ export class CreateReservationUseCase {
     private readonly reservationRepository: ReservationRepository,
     private readonly meetingRoomRepository: MeetingRoomRepository,
     private readonly equipmentRepository: EquipmentRepository,
+    private readonly resourceUnavailablePeriodRepository: ResourceUnavailablePeriodRepository,
     private readonly idGenerator: IdGenerator,
     private readonly clock: Clock,
   ) {}
@@ -66,6 +68,22 @@ export class CreateReservationUseCase {
       });
 
     if (ReservationConflictService.hasConflict(existingReservations, period)) {
+      throw new ReservationConflictError();
+    }
+
+    // 既存の利用停止枠と重複しないかの確認
+    const existingUnavailablePeriods =
+      await this.resourceUnavailablePeriodRepository.findByResource({
+        resourceType: input.resourceType,
+        resourceId: input.resourceId,
+      });
+
+    if (
+      ReservationConflictService.hasConflictWithUnavailablePeriods(
+        existingUnavailablePeriods,
+        period,
+      )
+    ) {
       throw new ReservationConflictError();
     }
 

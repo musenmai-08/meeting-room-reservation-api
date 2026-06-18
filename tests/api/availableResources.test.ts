@@ -6,6 +6,7 @@ import { type SearchAvailableResourcesUseCase } from "@application/usecases/reso
 import { PrismaEquipmentRepository } from "@infrastructure/prisma/repositories/PrismaEquipmentRepository";
 import { PrismaMeetingRoomRepository } from "@infrastructure/prisma/repositories/PrismaMeetingRoomRepository";
 import { PrismaReservationRepository } from "@infrastructure/prisma/repositories/PrismaReservationRepository";
+import { PrismaResourceUnavailablePeriodRepository } from "@infrastructure/prisma/repositories/PrismaResourceUnavailablePeriodRepository";
 import { SystemClock } from "@infrastructure/services/SystemClock";
 import { UuidGenerator } from "@infrastructure/services/UuidGenerator";
 import { createAvailableResourceRoutes } from "@infrastructure/web/routeFactories/availableResourceRoutes";
@@ -102,6 +103,8 @@ describe("AvailableResource API", () => {
     const meetingRoomRepository = new PrismaMeetingRoomRepository(client);
     const equipmentRepository = new PrismaEquipmentRepository(client);
     const reservationRepository = new PrismaReservationRepository(client);
+    const resourceUnavailablePeriodRepository =
+      new PrismaResourceUnavailablePeriodRepository(client);
     const idGenerator = new UuidGenerator();
     const clock = new SystemClock();
 
@@ -126,6 +129,7 @@ describe("AvailableResource API", () => {
         reservationRepository,
         meetingRoomRepository,
         equipmentRepository,
+        resourceUnavailablePeriodRepository,
         idGenerator,
         clock,
       }),
@@ -135,11 +139,13 @@ describe("AvailableResource API", () => {
         meetingRoomRepository,
         equipmentRepository,
         reservationRepository,
+        resourceUnavailablePeriodRepository,
       }),
     );
   });
 
   beforeEach(async () => {
+    await client.resourceUnavailablePeriod.deleteMany();
     await client.reservation.deleteMany();
     await client.meetingRoom.deleteMany();
     await client.equipment.deleteMany();
@@ -366,6 +372,41 @@ describe("AvailableResource API", () => {
         expect.objectContaining({
           id: meetingRoomId,
           name: "会議室A",
+        }),
+      ]);
+    });
+
+    it("[正常系] 有効な利用停止枠と重複するリソースは一覧に含まれない", async () => {
+      const unavailableMeetingRoomId = await createMeetingRoom(app, {
+        name: "会議室A",
+      });
+      await createMeetingRoom(app, {
+        name: "会議室B",
+      });
+      await client.resourceUnavailablePeriod.create({
+        data: {
+          id: "rup_001",
+          resourceType: "MEETING_ROOM",
+          resourceId: unavailableMeetingRoomId,
+          operatorId: "operator_001",
+          startAt: new Date("2030-06-11T10:00:00+09:00"),
+          endAt: new Date("2030-06-11T11:00:00+09:00"),
+          reason: "メンテナンス",
+          status: "ACTIVE",
+          cancelledAt: null,
+          createdAt: new Date("2030-06-10T10:00:00+09:00"),
+          updatedAt: new Date("2030-06-10T10:00:00+09:00"),
+        },
+      });
+
+      const response = await request(app)
+        .get("/available-resources")
+        .query(searchAvailableResourcesQuery)
+        .expect(200);
+
+      expect(response.body.items).toEqual([
+        expect.objectContaining({
+          name: "会議室B",
         }),
       ]);
     });
