@@ -1,0 +1,60 @@
+docs/testing/domain.md
+  s_149403cdd19328::t_d9996b9d91d8d0 107-147
+tests/domain/entities/ResourceUnavailablePeriod.test.ts
+  s_149403cdd19328::t_120307f8bc7802 1-59,86-121,147-178,187-188
+  s_149403cdd19328::t_eaecf18159edcb 60-85,122-146,179-186
+docs/testing/repository.md
+  s_149403cdd19328::t_bef1f8a7d626a6 37,82-91
+tests/domain/valueObjects/ResourceUnavailablePeriodStatus.test.ts
+  s_149403cdd19328::t_0648dd58a87787 1-27
+tests/domain/valueObjects/UnavailablePeriod.test.ts
+  s_149403cdd19328::t_a11c412be1e10d 1-27,46-88,100-102
+  s_149403cdd19328::t_a0185c736e9ec4 28-45,89-99
+tests/application/usecases/resourceUnavailablePeriods/GetResourceUnavailablePeriodUseCase.test.ts
+  s_149403cdd19328::t_19e762e2a8d471 1-56
+tests/application/usecases/resources/SearchAvailableResourcesUseCase.test.ts
+  s_149403cdd19328::t_1091de00851f7a 7,12-13,69-88,245-315
+tests/infrastructure/prisma/repositories/PrismaResourceUnavailablePeriodRepository.test.ts
+  s_149403cdd19328::t_084d9a6e81a5af 1-196
+tests/api/resourceUnavailablePeriods.test.ts
+  s_149403cdd19328::t_9a5e30244ac033 14-18,233-274
+  s_149403cdd19328::t_8a14b345ad02ce 1-13,19-172,189-232,275-381
+  s_149403cdd19328::t_a453596a285939 173-188
+tests/api/availableResources.test.ts
+  s_149403cdd19328::t_3227e37a13b230 379-413
+tests/application/usecases/reservations/CreateReservationUseCase.test.ts
+  s_149403cdd19328::t_4541fc2ff9176b 14,19-20,86-105,255-299
+tests/api/reservations.test.ts
+  s_149403cdd19328::t_9c8791e4318b3c 257-288
+docs/testing/api.md
+  s_149403cdd19328::t_29a5113e1f4036 49,72-91
+tests/application/usecases/resourceUnavailablePeriods/CreateResourceUnavailablePeriodUseCase.test.ts
+  s_149403cdd19328::t_15111ea72550a0 1-178,194-250
+  s_149403cdd19328::t_9499e3956cfff7 179-193
+tests/application/usecases/resourceUnavailablePeriods/CancelResourceUnavailablePeriodUseCase.test.ts
+  s_149403cdd19328::t_f67f1a59a6b35f 1-107
+docs/testing/usecase.md
+  s_149403cdd19328::t_291c44ac75b321 57-58,100-143
+tests/application/usecases/resourceUnavailablePeriods/ListResourceUnavailablePeriodsUseCase.test.ts
+  s_149403cdd19328::t_6a2e07b10815d3 98-107
+  s_149403cdd19328::t_c74e07e11d67b7 67-76,96-97,108-115
+  s_149403cdd19328::t_007b304e28795e 1-66,77-95,116-117
+tests/domain/services/ResourceUnavailablePeriodConflictService.test.ts
+  s_149403cdd19328::t_aa598e5436d01f 1-120
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "b1913d9510e9ba06c1f71e4ab4632d8e3bf4e8c0",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
