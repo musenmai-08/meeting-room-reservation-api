@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  ReservationConflictError,
-  ReservationStartAtMustBeFutureError,
-} from "@application/errors/ReservationApplicationErrors";
 import { ResourceNotFoundError } from "@application/errors/ResourceApplicationErrors";
+import {
+  ResourceUnavailablePeriodConflictError,
+  ResourceUnavailablePeriodReservationConflictError,
+  ResourceUnavailablePeriodStartAtMustBeFutureError,
+} from "@application/errors/ResourceUnavailablePeriodError";
 import { type Clock } from "@application/services/Clock";
 import { type IdGenerator } from "@application/services/IdGenerator";
-import { CreateReservationUseCase } from "@application/usecases/reservations/CreateReservationUseCase";
+import { CreateResourceUnavailablePeriodUseCase } from "@application/usecases/resourceUnavailablePeriods/CreateResourceUnavailablePeriodUseCase";
 import { Equipment } from "@domain/entities/Equipment";
 import { MeetingRoom } from "@domain/entities/MeetingRoom";
 import { Reservation } from "@domain/entities/Reservation";
@@ -63,11 +64,9 @@ const createEquipment = (id = "eq_001"): Equipment =>
     updatedAt: date("2026-06-10T10:00:00+09:00"),
   });
 
-const createReservation = (
-  overrides: Partial<Parameters<typeof Reservation.create>[0]> = {},
-): Reservation =>
+const createReservation = (): Reservation =>
   Reservation.create({
-    id: "res_existing",
+    id: "res_001",
     resourceType: ResourceType.MeetingRoom,
     resourceId: "mr_001",
     userId: "user_001",
@@ -75,19 +74,16 @@ const createReservation = (
       date("2026-06-11T10:00:00+09:00"),
       date("2026-06-11T11:00:00+09:00"),
     ),
-    purpose: "既存予約",
+    purpose: "定例ミーティング",
     status: ReservationStatus.Reserved,
     cancelledAt: null,
     createdAt: date("2026-06-10T10:00:00+09:00"),
     updatedAt: date("2026-06-10T10:00:00+09:00"),
-    ...overrides,
   });
 
-const createResourceUnavailablePeriod = (
-  overrides: Partial<Parameters<typeof ResourceUnavailablePeriod.create>[0]> = {},
-): ResourceUnavailablePeriod =>
+const createResourceUnavailablePeriod = (): ResourceUnavailablePeriod =>
   ResourceUnavailablePeriod.create({
-    id: "rup_001",
+    id: "rup_existing",
     resourceType: ResourceType.MeetingRoom,
     resourceId: "mr_001",
     operatorId: "operator_001",
@@ -95,165 +91,123 @@ const createResourceUnavailablePeriod = (
       date("2026-06-11T10:00:00+09:00"),
       date("2026-06-11T11:00:00+09:00"),
     ),
-    reason: "メンテナンス",
+    reason: "既存メンテナンス",
     status: ResourceUnavailablePeriodStatus.Active,
     cancelledAt: null,
     createdAt: date("2026-06-10T10:00:00+09:00"),
     updatedAt: date("2026-06-10T10:00:00+09:00"),
-    ...overrides,
   });
 
-const createUseCase = (options: { id?: string; now?: Date } = {}) => {
+const createUseCase = () => {
+  const resourceUnavailablePeriodRepository =
+    new InMemoryResourceUnavailablePeriodRepository();
   const reservationRepository = new InMemoryReservationRepository();
   const meetingRoomRepository = new InMemoryMeetingRoomRepository();
   const equipmentRepository = new InMemoryEquipmentRepository();
-  const resourceUnavailablePeriodRepository =
-    new InMemoryResourceUnavailablePeriodRepository();
-  const useCase = new CreateReservationUseCase(
+  const useCase = new CreateResourceUnavailablePeriodUseCase(
+    resourceUnavailablePeriodRepository,
     reservationRepository,
     meetingRoomRepository,
     equipmentRepository,
-    resourceUnavailablePeriodRepository,
-    new FixedIdGenerator(options.id ?? "res_001"),
-    new FixedClock(options.now ?? date("2026-06-10T10:00:00+09:00")),
+    new FixedIdGenerator("rup_001"),
+    new FixedClock(date("2026-06-10T10:00:00+09:00")),
   );
 
   return {
     useCase,
+    resourceUnavailablePeriodRepository,
     reservationRepository,
     meetingRoomRepository,
     equipmentRepository,
-    resourceUnavailablePeriodRepository,
   };
 };
 
-describe("CreateReservationUseCase", () => {
-  it("[正常系] 存在する会議室なら予約を作成できる", async () => {
-    const { useCase, meetingRoomRepository, reservationRepository } =
+describe("CreateResourceUnavailablePeriodUseCase", () => {
+  it("[正常系] 存在する会議室なら利用停止枠を作成できる", async () => {
+    const { useCase, meetingRoomRepository, resourceUnavailablePeriodRepository } =
       createUseCase();
     await meetingRoomRepository.save(createMeetingRoom());
 
     const output = await useCase.execute({
       resourceType: ResourceType.MeetingRoom,
       resourceId: "mr_001",
-      userId: "user_001",
+      operatorId: "operator_001",
       startAt: date("2026-06-11T10:00:00+09:00"),
       endAt: date("2026-06-11T11:00:00+09:00"),
-      purpose: "定例ミーティング",
+      reason: "メンテナンス",
     });
 
-    expect(output.id).toBe("res_001");
-    expect(output.status).toBe(ReservationStatus.Reserved);
-    expect(await reservationRepository.findById("res_001")).not.toBeNull();
+    expect(output.id).toBe("rup_001");
+    expect(output.status).toBe(ResourceUnavailablePeriodStatus.Active);
+    expect(
+      await resourceUnavailablePeriodRepository.findById("rup_001"),
+    ).not.toBeNull();
   });
 
-  it("[正常系] 存在する備品なら予約を作成できる", async () => {
+  it("[正常系] 存在する備品なら利用停止枠を作成できる", async () => {
     const { useCase, equipmentRepository } = createUseCase();
     await equipmentRepository.save(createEquipment());
 
     const output = await useCase.execute({
       resourceType: ResourceType.Equipment,
       resourceId: "eq_001",
-      userId: "user_001",
+      operatorId: "operator_001",
       startAt: date("2026-06-11T10:00:00+09:00"),
       endAt: date("2026-06-11T11:00:00+09:00"),
-      purpose: "備品利用",
+      reason: "メンテナンス",
     });
 
     expect(output.resourceType).toBe(ResourceType.Equipment);
     expect(output.resourceId).toBe("eq_001");
   });
 
-  it("[異常系] 存在しない会議室は予約できない", async () => {
+  it("[異常系] 存在しないリソースは利用停止枠を作成できない", async () => {
     const { useCase } = createUseCase();
 
     await expect(
       useCase.execute({
         resourceType: ResourceType.MeetingRoom,
         resourceId: "mr_missing",
-        userId: "user_001",
+        operatorId: "operator_001",
         startAt: date("2026-06-11T10:00:00+09:00"),
         endAt: date("2026-06-11T11:00:00+09:00"),
-        purpose: "定例ミーティング",
+        reason: "メンテナンス",
       }),
     ).rejects.toThrow(ResourceNotFoundError);
   });
 
-  it("[異常系] 存在しない備品は予約できない", async () => {
+  it("[異常系] 存在しない備品は利用停止枠を作成できない", async () => {
     const { useCase } = createUseCase();
 
     await expect(
       useCase.execute({
         resourceType: ResourceType.Equipment,
         resourceId: "eq_missing",
-        userId: "user_001",
+        operatorId: "operator_001",
         startAt: date("2026-06-11T10:00:00+09:00"),
         endAt: date("2026-06-11T11:00:00+09:00"),
-        purpose: "備品利用",
+        reason: "メンテナンス",
       }),
     ).rejects.toThrow(ResourceNotFoundError);
   });
 
-  it("[異常系] 予約開始日時が現在日時以前の場合、予約作成に失敗する", async () => {
-    const { useCase, meetingRoomRepository } = createUseCase({
-      now: date("2026-06-11T10:00:00+09:00"),
-    });
+  it("[異常系] 開始日時が現在日時以前の場合は作成できない", async () => {
+    const { useCase, meetingRoomRepository } = createUseCase();
     await meetingRoomRepository.save(createMeetingRoom());
 
     await expect(
       useCase.execute({
         resourceType: ResourceType.MeetingRoom,
         resourceId: "mr_001",
-        userId: "user_001",
-        startAt: date("2026-06-11T10:00:00+09:00"),
-        endAt: date("2026-06-11T11:00:00+09:00"),
-        purpose: "定例ミーティング",
+        operatorId: "operator_001",
+        startAt: date("2026-06-10T10:00:00+09:00"),
+        endAt: date("2026-06-10T11:00:00+09:00"),
+        reason: "メンテナンス",
       }),
-    ).rejects.toThrow(ReservationStartAtMustBeFutureError);
+    ).rejects.toThrow(ResourceUnavailablePeriodStartAtMustBeFutureError);
   });
 
-  it("[異常系] 重複予約がある場合は予約作成に失敗する", async () => {
-    const { useCase, meetingRoomRepository, reservationRepository } =
-      createUseCase();
-    await meetingRoomRepository.save(createMeetingRoom());
-    await reservationRepository.save(createReservation());
-
-    await expect(
-      useCase.execute({
-        resourceType: ResourceType.MeetingRoom,
-        resourceId: "mr_001",
-        userId: "user_002",
-        startAt: date("2026-06-11T10:30:00+09:00"),
-        endAt: date("2026-06-11T11:30:00+09:00"),
-        purpose: "別ミーティング",
-      }),
-    ).rejects.toThrow(ReservationConflictError);
-  });
-
-  it("[正常系] キャンセル済み予約とは重複しても予約作成できる", async () => {
-    const { useCase, meetingRoomRepository, reservationRepository } =
-      createUseCase();
-    await meetingRoomRepository.save(createMeetingRoom());
-    await reservationRepository.save(
-      createReservation({
-        status: ReservationStatus.Cancelled,
-        cancelledAt: date("2026-06-10T12:00:00+09:00"),
-      }),
-    );
-
-    const output = await useCase.execute({
-      resourceType: ResourceType.MeetingRoom,
-      resourceId: "mr_001",
-      userId: "user_002",
-      startAt: date("2026-06-11T10:30:00+09:00"),
-      endAt: date("2026-06-11T11:30:00+09:00"),
-      purpose: "別ミーティング",
-    });
-
-    expect(output.id).toBe("res_001");
-  });
-
-  it("[異常系] 有効な利用停止枠と重複する場合は予約作成に失敗する", async () => {
+  it("[異常系] 有効な利用停止枠と重複する場合は作成できない", async () => {
     const {
       useCase,
       meetingRoomRepository,
@@ -268,37 +222,29 @@ describe("CreateReservationUseCase", () => {
       useCase.execute({
         resourceType: ResourceType.MeetingRoom,
         resourceId: "mr_001",
-        userId: "user_001",
+        operatorId: "operator_001",
         startAt: date("2026-06-11T10:30:00+09:00"),
         endAt: date("2026-06-11T11:30:00+09:00"),
-        purpose: "定例ミーティング",
+        reason: "メンテナンス",
       }),
-    ).rejects.toThrow(ReservationConflictError);
+    ).rejects.toThrow(ResourceUnavailablePeriodConflictError);
   });
 
-  it("[正常系] キャンセル済み利用停止枠とは重複しても予約作成できる", async () => {
-    const {
-      useCase,
-      meetingRoomRepository,
-      resourceUnavailablePeriodRepository,
-    } = createUseCase();
+  it("[異常系] 有効予約と重複する場合は作成できない", async () => {
+    const { useCase, meetingRoomRepository, reservationRepository } =
+      createUseCase();
     await meetingRoomRepository.save(createMeetingRoom());
-    await resourceUnavailablePeriodRepository.save(
-      createResourceUnavailablePeriod({
-        status: ResourceUnavailablePeriodStatus.Cancelled,
-        cancelledAt: date("2026-06-10T12:00:00+09:00"),
+    await reservationRepository.save(createReservation());
+
+    await expect(
+      useCase.execute({
+        resourceType: ResourceType.MeetingRoom,
+        resourceId: "mr_001",
+        operatorId: "operator_001",
+        startAt: date("2026-06-11T10:30:00+09:00"),
+        endAt: date("2026-06-11T11:30:00+09:00"),
+        reason: "メンテナンス",
       }),
-    );
-
-    const output = await useCase.execute({
-      resourceType: ResourceType.MeetingRoom,
-      resourceId: "mr_001",
-      userId: "user_001",
-      startAt: date("2026-06-11T10:30:00+09:00"),
-      endAt: date("2026-06-11T11:30:00+09:00"),
-      purpose: "定例ミーティング",
-    });
-
-    expect(output.id).toBe("res_001");
+    ).rejects.toThrow(ResourceUnavailablePeriodReservationConflictError);
   });
 });

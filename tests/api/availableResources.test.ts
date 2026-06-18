@@ -376,6 +376,41 @@ describe("AvailableResource API", () => {
       ]);
     });
 
+    it("[正常系] 有効な利用停止枠と重複するリソースは一覧に含まれない", async () => {
+      const unavailableMeetingRoomId = await createMeetingRoom(app, {
+        name: "会議室A",
+      });
+      await createMeetingRoom(app, {
+        name: "会議室B",
+      });
+      await client.resourceUnavailablePeriod.create({
+        data: {
+          id: "rup_001",
+          resourceType: "MEETING_ROOM",
+          resourceId: unavailableMeetingRoomId,
+          operatorId: "operator_001",
+          startAt: new Date("2030-06-11T10:00:00+09:00"),
+          endAt: new Date("2030-06-11T11:00:00+09:00"),
+          reason: "メンテナンス",
+          status: "ACTIVE",
+          cancelledAt: null,
+          createdAt: new Date("2030-06-10T10:00:00+09:00"),
+          updatedAt: new Date("2030-06-10T10:00:00+09:00"),
+        },
+      });
+
+      const response = await request(app)
+        .get("/available-resources")
+        .query(searchAvailableResourcesQuery)
+        .expect(200);
+
+      expect(response.body.items).toEqual([
+        expect.objectContaining({
+          name: "会議室B",
+        }),
+      ]);
+    });
+
     it("[異常系] 想定外のエラーが発生した場合、500 を返す", async () => {
       const app = express();
       const controller = new AvailableResourceController({
