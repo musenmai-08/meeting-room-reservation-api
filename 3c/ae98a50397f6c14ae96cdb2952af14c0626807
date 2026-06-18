@@ -1,0 +1,27 @@
+tests/application/usecases/resources/SearchAvailableResourcesUseCase.test.ts
+  s_149403cdd19328::t_2f71d814ab3e22 14,70-71,76,84
+src/application/usecases/resources/SearchAvailableResourcesUseCase.ts
+  s_149403cdd19328::t_db819631fdbe10 4-5,43,67-68,72-76,99-102,106-110,120-137
+tests/api/availableResources.test.ts
+  s_149403cdd19328::t_c79c549f7c544c 142
+src/infrastructure/web/routeFactories/availableResourceRoutes.ts
+  s_149403cdd19328::t_f27d3138e1f208 6,14,26
+src/infrastructure/web/routes.ts
+  s_149403cdd19328::t_dffab05c605ade 55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "3cae98a50397f6c14ae96cdb2952af14c0626807",
+  "prompts": {},
+  "sessions": {
+    "s_149403cdd19328": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ebaa7-d89c-7501-a902-2676ad82add5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "tezuka.genki <tezuka.genki@gmail.com>"
+    }
+  }
+}
