@@ -52,6 +52,7 @@ export function createRoutes(): Router {
       meetingRoomRepository,
       equipmentRepository,
       reservationRepository,
+      resourceUnavailablePeriodRepository,
     }),
   );
   router.use(

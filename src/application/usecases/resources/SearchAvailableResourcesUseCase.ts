@@ -1,6 +1,8 @@
 import { EquipmentRepository } from "@application/repositories/EquipmentRepository";
 import { MeetingRoomRepository } from "@application/repositories/MeetingRoomRepository";
 import { ReservationRepository } from "@application/repositories/ReservationRepository";
+import { ResourceUnavailablePeriodRepository } from "@application/repositories/ResourceUnavailablePeriodRepository";
+import { ResourceUnavailablePeriodStatus } from "@domain/valueObjects/ResourceUnavailablePeriodStatus";
 import { EquipmentCategory } from "@domain/valueObjects/EquipmentCategory";
 import { ReservationPeriod } from "@domain/valueObjects/ReservationPeriod";
 import { ResourceType } from "@domain/valueObjects/ResourceType";
@@ -38,6 +40,7 @@ export class SearchAvailableResourcesUseCase {
     private readonly meetingRoomRepository: MeetingRoomRepository,
     private readonly equipmentRepository: EquipmentRepository,
     private readonly reservationRepository: ReservationRepository,
+    private readonly resourceUnavailablePeriodRepository: ResourceUnavailablePeriodRepository,
   ) {}
 
   public async execute(
@@ -61,10 +64,16 @@ export class SearchAvailableResourcesUseCase {
       const reservedResourceIds = new Set(
         overlappingReservations.map((reservation) => reservation.resourceId),
       );
+      const unavailableResourceIds =
+        await this.findUnavailableResourceIds(ResourceType.MeetingRoom, period);
 
       return {
         items: meetingRooms
-          .filter((meetingRoom) => !reservedResourceIds.has(meetingRoom.id))
+          .filter(
+            (meetingRoom) =>
+              !reservedResourceIds.has(meetingRoom.id) &&
+              !unavailableResourceIds.has(meetingRoom.id),
+          )
           .map((meetingRoom) => ({
             resourceType: ResourceType.MeetingRoom,
             id: meetingRoom.id,
@@ -87,10 +96,18 @@ export class SearchAvailableResourcesUseCase {
     const reservedResourceIds = new Set(
       overlappingReservations.map((reservation) => reservation.resourceId),
     );
+    const unavailableResourceIds = await this.findUnavailableResourceIds(
+      ResourceType.Equipment,
+      period,
+    );
 
     return {
       items: equipments
-        .filter((equipment) => !reservedResourceIds.has(equipment.id))
+        .filter(
+          (equipment) =>
+            !reservedResourceIds.has(equipment.id) &&
+            !unavailableResourceIds.has(equipment.id),
+        )
         .map((equipment) => ({
           resourceType: ResourceType.Equipment,
           id: equipment.id,
@@ -99,5 +116,24 @@ export class SearchAvailableResourcesUseCase {
           location: equipment.location,
         })),
     };
+  }
+
+  private async findUnavailableResourceIds(
+    resourceType: ResourceType,
+    period: ReservationPeriod,
+  ): Promise<Set<string>> {
+    const resourceUnavailablePeriods =
+      await this.resourceUnavailablePeriodRepository.findAll({
+        resourceType,
+        status: ResourceUnavailablePeriodStatus.Active,
+      });
+
+    return new Set(
+      resourceUnavailablePeriods
+        .filter((resourceUnavailablePeriod) =>
+          resourceUnavailablePeriod.period.overlaps(period),
+        )
+        .map((resourceUnavailablePeriod) => resourceUnavailablePeriod.resourceId),
+    );
   }
 }

@@ -3,6 +3,7 @@ import { Router } from "express";
 import { EquipmentRepository } from "@application/repositories/EquipmentRepository";
 import { MeetingRoomRepository } from "@application/repositories/MeetingRoomRepository";
 import { ReservationRepository } from "@application/repositories/ReservationRepository";
+import { ResourceUnavailablePeriodRepository } from "@application/repositories/ResourceUnavailablePeriodRepository";
 import { SearchAvailableResourcesUseCase } from "@application/usecases/resources/SearchAvailableResourcesUseCase";
 import { AvailableResourceController } from "@interface/controllers/AvailableResourceController";
 
@@ -10,6 +11,7 @@ type CreateAvailableResourceDependencies = {
   meetingRoomRepository: MeetingRoomRepository;
   equipmentRepository: EquipmentRepository;
   reservationRepository: ReservationRepository;
+  resourceUnavailablePeriodRepository: ResourceUnavailablePeriodRepository;
 };
 
 export function createAvailableResourceRoutes(
@@ -21,6 +23,7 @@ export function createAvailableResourceRoutes(
       dependencies.meetingRoomRepository,
       dependencies.equipmentRepository,
       dependencies.reservationRepository,
+      dependencies.resourceUnavailablePeriodRepository,
     ),
   );
 

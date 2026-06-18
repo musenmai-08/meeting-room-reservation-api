@@ -139,6 +139,7 @@ describe("AvailableResource API", () => {
         meetingRoomRepository,
         equipmentRepository,
         reservationRepository,
+        resourceUnavailablePeriodRepository,
       }),
     );
   });

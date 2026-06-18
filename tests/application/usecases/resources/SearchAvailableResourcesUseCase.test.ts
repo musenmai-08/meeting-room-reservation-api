@@ -11,6 +11,7 @@ import { ResourceType } from "@domain/valueObjects/ResourceType";
 import { InMemoryEquipmentRepository } from "@infrastructure/_repositories/InMemoryEquipmentRepository";
 import { InMemoryMeetingRoomRepository } from "@infrastructure/_repositories/InMemoryMeetingRoomRepository";
 import { InMemoryReservationRepository } from "@infrastructure/_repositories/InMemoryReservationRepository";
+import { InMemoryResourceUnavailablePeriodRepository } from "@infrastructure/_repositories/InMemoryResourceUnavailablePeriodRepository";
 
 const date = (isoString: string): Date => new Date(isoString);
 
@@ -66,10 +67,13 @@ const createUseCase = () => {
   const meetingRoomRepository = new InMemoryMeetingRoomRepository();
   const equipmentRepository = new InMemoryEquipmentRepository();
   const reservationRepository = new InMemoryReservationRepository();
+  const resourceUnavailablePeriodRepository =
+    new InMemoryResourceUnavailablePeriodRepository();
   const useCase = new SearchAvailableResourcesUseCase(
     meetingRoomRepository,
     equipmentRepository,
     reservationRepository,
+    resourceUnavailablePeriodRepository,
   );
 
   return {
@@ -77,6 +81,7 @@ const createUseCase = () => {
     meetingRoomRepository,
     equipmentRepository,
     reservationRepository,
+    resourceUnavailablePeriodRepository,
   };
 };
 
